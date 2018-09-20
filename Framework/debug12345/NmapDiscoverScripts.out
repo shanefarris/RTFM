@@ -1,0 +1,91 @@
+Starting Nmap 7.70 ( https://nmap.org ) at 2018-07-22 01:06 CDT
+NSE: [broadcast-sonicwall-discover] No network interface was supplied, aborting.
+Pre-scan script results:
+| broadcast-dhcp-discover: 
+|   Response 1 of 1: 
+|     IP Offered: 192.168.159.143
+|     DHCP Message Type: DHCPOFFER
+|     Server Identifier: 192.168.159.254
+|     IP Address Lease Time: 30m00s
+|     Subnet Mask: 255.255.255.0
+|     Router: 192.168.159.2
+|     Domain Name Server: 192.168.159.2
+|     Domain Name: localdomain
+|     Broadcast Address: 192.168.159.255
+|     NetBIOS Name Server: 192.168.159.2
+|     Renewal Time Value: 15m00s
+|_    Rebinding Time Value: 26m15s
+| broadcast-igmp-discovery: 
+|   192.168.159.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.251
+|     Description: mDNS (rfc6762)
+|   192.168.159.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 224.0.0.252
+|     Description: Link-local Multicast Name Resolution (rfc4795)
+|   192.168.159.1
+|     Interface: eth0
+|     Version: 2
+|     Group: 239.255.255.250
+|     Description: Organization-Local Scope (rfc2365)
+|_  Use the newtargets script-arg to add the results as targets
+| broadcast-listener: 
+|   ether
+|       ARP Request
+|         sender ip      sender mac         target ip
+|         192.168.159.2  00:50:56:EC:EA:47  192.168.159.143
+|   udp
+|       DHCP
+|         srv ip           cli ip           mask           gw             dns            vendor
+|         192.168.159.254  192.168.159.143  255.255.255.0  192.168.159.2  192.168.159.2  -
+|         192.168.159.254  192.168.159.133  255.255.255.0  192.168.159.2  192.168.159.2  -
+|       DHCP6
+|         ip                         fqdn
+|_        fe80::1429:cfe1:249f:954a  Swifty-PC
+| broadcast-netbios-master-browser: 
+|_ip  server  domain
+Nmap scan report for 192.168.159.1
+Host is up (0.00044s latency).
+Not shown: 997 filtered ports
+PORT    STATE SERVICE
+135/tcp open  msrpc
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+MAC Address: 00:50:56:C0:00:08 (VMware)
+
+Nmap scan report for 192.168.159.2
+Host is up (0.0012s latency).
+All 1000 scanned ports on 192.168.159.2 are closed
+MAC Address: 00:50:56:EC:EA:47 (VMware)
+
+Nmap scan report for 192.168.159.139
+Host is up (0.00018s latency).
+Not shown: 988 closed ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+23/tcp   open  telnet
+25/tcp   open  smtp
+53/tcp   open  domain
+80/tcp   open  http
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3306/tcp open  mysql
+5432/tcp open  postgresql
+8009/tcp open  ajp13
+8180/tcp open  unknown
+MAC Address: 00:0C:29:E0:38:F3 (VMware)
+
+Nmap scan report for 192.168.159.254
+Host is up (0.000056s latency).
+All 1000 scanned ports on 192.168.159.254 are filtered
+MAC Address: 00:50:56:ED:5E:3D (VMware)
+
+Nmap scan report for 192.168.159.137
+Host is up (0.0000020s latency).
+All 1000 scanned ports on 192.168.159.137 are closed
+
+Nmap done: 256 IP addresses (5 hosts up) scanned in 48.44 seconds

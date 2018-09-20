@@ -1,0 +1,1 @@
+Get-ChildItem "./" -include *.py -rec | ForEach-Object {gc $_; ""} | out-file test.txt
