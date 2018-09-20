@@ -10,7 +10,7 @@ Tools used for OSCP prep
 - CustomTools.py: More complex use of tools that would be difficult to make data driven.
 - Enumeration.py: Facilitates nmap, tshark, nikto, tcpdump, few other tools, and can be used for local enumeration.
 - Exploit.py: Specifically runs tools for exploiting.  More intelligent then the tool list.
-- main.py: Starts the program.  Use Python3 main.py -s debug12345 to load an existing session.
+- main.py: Starts the program.  Use `Python3 main.py -s debug12345` to load an existing session.
 - Maintain.py: Used to help maintain access on a compromised machine, but not working on because I don't think it's needed for OSCP.
 - MenuBase.py: Base class for menus.
 - NmapScripts.py: Custom tools that are all utilizing Nmap.
