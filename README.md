@@ -16,6 +16,7 @@ Tools used for OSCP prep
 - NmapScripts.py: Custom tools that are all utilizing Nmap.
 - Parsers.py: Custom parsing logic used to better integrate output from various tools and create a collaborative process.
 - Screen.py: Main menu screen.
+- Session.py: Keep the session data, saves and loads the session/s, and generates the reports.
 - Setup.py: Can be used alone, or part of the program.  Installed required software, and ensures rapid deployment on new Kali machines.
 - Shells.py: Collection of reverse shells that are outputted with the host IP and port, plain text, base64, and simple encryption.
 - TargetHost.py: Keeps information on the target, and will output a report whenever the session is saved.
