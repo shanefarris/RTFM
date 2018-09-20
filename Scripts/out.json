@@ -1,0 +1,208 @@
+[i] SearchSploit's XML mode (without verbose enabled).   To enable: searchsploit -v --xml...
+[i] Reading: 'nmap_quick.xml'
+
+{
+	"SEARCH": "msrpc",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "netbios ssn",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "https",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [
+		{"Title":"Apache Tomcat 6.0.16 - 'HttpServletResponse.sendError()' Cross-Site Scripting","EDB-ID":"32138","Date":"2008-08-01","Author":"Konstantin Kolinko","Type":"remote","Platform":"multiple","Path":"/usr/share/exploitdb/exploits/multiple/remote/32138.txt"},
+		{"Title":"BugHunter HTTP Server 1.6.2 - 'httpsv.exe' GET 404 Remote Denial of Service","EDB-ID":"9478","Date":"2007-06-21","Author":"Prili","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/9478.pl"},
+		{"Title":"GeoHttpServer - Remote Denial of Service","EDB-ID":"12531","Date":"2010-05-08","Author":"aviho1","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/12531.pl"},
+		{"Title":"GeoVision (GeoHttpServer) Webcams - Remote File Disclosure","EDB-ID":"37258","Date":"2015-06-10","Author":"Viktor Minin","Type":"webapps","Platform":"hardware","Path":"/usr/share/exploitdb/exploits/hardware/webapps/37258.py"},
+		{"Title":"HttpServer 1.0 - Directory Traversal","EDB-ID":"41638","Date":"2017-03-19","Author":"malwrforensics","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/41638.txt"},
+		{"Title":"Mabry Software HTTPServer/X 1.0 0.047 - File Disclosure","EDB-ID":"22892","Date":"2003-07-11","Author":"dr_insane","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/22892.txt"},
+		{"Title":"MailEnable Enterprise & Professional - https Remote Buffer Overflow","EDB-ID":"952","Date":"2005-04-25","Author":"CorryL","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/952.pl"},
+		{"Title":"MiniHTTPServer Web Forum & File Sharing Server 4.0 - Add User","EDB-ID":"2651","Date":"2006-10-25","Author":"Greg Linares","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/2651.c"},
+		{"Title":"MiniHTTPServer Web Forums Server 1.x/2.0 - Directory Traversal","EDB-ID":"22795","Date":"2003-06-18","Author":"dr_insane","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/22795.txt"},
+		{"Title":"Novell Netware 6.0 / eDirectory 8.7 - HTTPSTK.NLM Remote Abend","EDB-ID":"22749","Date":"2003-06-06","Author":"Cheese Head","Type":"dos","Platform":"novell","Path":"/usr/share/exploitdb/exploits/novell/dos/22749.txt"},
+		{"Title":"Novell eDirectory - HTTPSTK Login Stack Overflow","EDB-ID":"10163","Date":"2009-11-17","Author":"karak0rsan","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/10163.pl"},
+		{"Title":"Novell eDirectory 8.x - iMonitor HTTPSTK Buffer Overflow (1)","EDB-ID":"28835","Date":"2006-10-21","Author":"Manuel Santamarina Suarez","Type":"remote","Platform":"novell","Path":"/usr/share/exploitdb/exploits/novell/remote/28835.pl"},
+		{"Title":"Novell eDirectory 8.x - iMonitor HTTPSTK Buffer Overflow (2)","EDB-ID":"28836","Date":"2006-10-30","Author":"Expanders","Type":"remote","Platform":"novell","Path":"/usr/share/exploitdb/exploits/novell/remote/28836.c"},
+		{"Title":"Novell eDirectory 8.x - iMonitor HTTPSTK Buffer Overflow (3)","EDB-ID":"28837","Date":"2006-10-30","Author":"MC","Type":"remote","Platform":"novell","Path":"/usr/share/exploitdb/exploits/novell/remote/28837.rb"},
+		{"Title":"Python CGIHTTPServer - Encoded Directory Traversal","EDB-ID":"33894","Date":"2014-06-27","Author":"RedTeam Pentesting","Type":"webapps","Platform":"multiple","Path":"/usr/share/exploitdb/exploits/multiple/webapps/33894.txt"},
+		{"Title":"Sunway Force Control SCADA 6.1 SP3 - 'httpsrv.exe' Remote Overflow","EDB-ID":"17721","Date":"2011-08-26","Author":"Canberk BOLAT","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/17721.rb"}
+	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "microsoft ds",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [
+		{"Title":"MDAC 2.1.2.4202.3 / Microsoft Windows NT 4.0/SP1-6 JET/ODBC Patch / RDS Fix - Registry Key","EDB-ID":"19506","Date":"1999-09-21","Author":".rain.forest.puppy","Type":"local","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/local/19506.txt"},
+		{"Title":"Microsoft Color Management Module 'icm32.dll' - 'icm32!Fill_ushort_ELUTs_from_lut16Tag' Out-of-Bounds Read (MS17-013)","EDB-ID":"41657","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41657.txt"},
+		{"Title":"Microsoft Color Management Module 'icm32.dll' - 'icm32!LHCalc3toX_Di16_Do16_Lut8_G32' Out-of-Bounds Read (MS17-013)","EDB-ID":"41659","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41659.txt"},
+		{"Title":"Microsoft Data Access Components (MDAC) 2.1 / Microsoft IIS 3.0/4.0 / Microsoft Index Server 2.0 / Microsoft Site Server Commerce Edition 3.0 i386 MDAC - RDS (1)","EDB-ID":"19424","Date":"1999-07-19","Author":"rain forest puppy","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/19424.pl"},
+		{"Title":"Microsoft Data Access Components (MDAC) 2.1 / Microsoft IIS 3.0/4.0 / Microsoft Index Server 2.0 / Microsoft Site Server Commerce Edition 3.0 i386 MDAC - RDS (2)","EDB-ID":"19425","Date":"1999-07-19","Author":"Wanderley J. Abreu Jr","Type":"local","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/local/19425.txt"},
+		{"Title":"Microsoft Edge - 'CText­Extractor::Get­Block­Text' Out-of-Bounds Read (MS16-104)","EDB-ID":"40797","Date":"2016-11-21","Author":"Skylined","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40797.html"},
+		{"Title":"Microsoft Edge - Out-of-Bounds Access when Fetching Source","EDB-ID":"42481","Date":"2017-08-17","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42481.js"},
+		{"Title":"Microsoft Edge 38.14393.1066.0 - 'CInputDateTimeScrollerElement::_SelectValueInternal' Out-of-Bounds Read","EDB-ID":"42459","Date":"2017-08-16","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42459.html"},
+		{"Title":"Microsoft Edge 38.14393.1066.0 - 'COptionsCollectionCacheItem::GetAt' Out-of-Bounds Read","EDB-ID":"42759","Date":"2017-09-19","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42759.html"},
+		{"Title":"Microsoft Edge Chakra - 'AppendLeftOverItemsFromEndSegment' Out-of-Bounds Read","EDB-ID":"43522","Date":"2018-01-11","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/43522.js"},
+		{"Title":"Microsoft Edge Chakra - 'AsmJSByteCodeGenerator::EmitCall' Out-of-Bounds Read","EDB-ID":"43720","Date":"2018-01-17","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/43720.js"},
+		{"Title":"Microsoft Edge Chakra - 'asm.js' Out-of-Bounds Read","EDB-ID":"43468","Date":"2018-01-09","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/43468.js"},
+		{"Title":"Microsoft Edge Chakra JIT - Incorrect Bounds Calculation","EDB-ID":"43710","Date":"2018-01-17","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/43710.js"},
+		{"Title":"Microsoft Edge Chakra JIT - Out-of-Bounds Write","EDB-ID":"43718","Date":"2018-01-17","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/43718.js"},
+		{"Title":"Microsoft Excel - Out-of-Bounds Read Code Execution (MS16-042)","EDB-ID":"39694","Date":"2016-04-14","Author":"Sébastien Morin","Type":"local","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/local/39694.txt"},
+		{"Title":"Microsoft GDI+ - 'gdiplus!GetRECTSForPlayback' Out-of-Bounds Read (MS17-013)","EDB-ID":"41656","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41656.txt"},
+		{"Title":"Microsoft IIS - MDAC 'msadcs.dll' RDS DataStub Content-Type Overflow (MS02-065) (Metasploit)","EDB-ID":"19026","Date":"2012-06-08","Author":"Metasploit","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/19026.rb"},
+		{"Title":"Microsoft IIS 3.0 - 'newdsn.exe' File Creation","EDB-ID":"20309","Date":"1997-08-25","Author":"Vytis Fedaravicius","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/20309.txt"},
+		{"Title":"Microsoft Internet Explorer - CardSpaceClaimCollection ActiveX Integer Underflow (MS13-090) (Metasploit)","EDB-ID":"29857","Date":"2013-11-27","Author":"Metasploit","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/29857.rb"},
+		{"Title":"Microsoft Internet Explorer - MSHTML!CMultiReadStreamLifetimeManager::ReleaseThreadStateInternal Read AV","EDB-ID":"40253","Date":"2016-08-16","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40253.html"},
+		{"Title":"Microsoft Internet Explorer - Recordset Double-Free Memory (MS07-009)","EDB-ID":"3577","Date":"2007-03-26","Author":"anonymous","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/3577.html"},
+		{"Title":"Microsoft Internet Explorer 11/10/9 - MSHTML 'PROPERTYDESC::Handle­Style­Component­Property' Out-of-Bounds Read (MS16-104)","EDB-ID":"40748","Date":"2016-11-10","Author":"Skylined","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40748.html"},
+		{"Title":"Microsoft Internet Explorer 6 - ADODB.Recordset Filter Property Denial of Service","EDB-ID":"28145","Date":"2006-07-03","Author":"hdm","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/28145.html"},
+		{"Title":"Microsoft Internet Explorer 6 - RDS.DataControl Denial of Service","EDB-ID":"28194","Date":"2006-07-08","Author":"hdm","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/28194.txt"},
+		{"Title":"Microsoft Internet Explorer 8 - MSHTML 'SRun­Pointer::Span­Qualifier/Run­Type' Out-Of-Bounds Read (MS15-009)","EDB-ID":"40841","Date":"2016-11-28","Author":"Skylined","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40841.html"},
+		{"Title":"Microsoft Internet Explorer 9 - MSHTML CPtsTextParaclient::CountApes Out-of-Bounds Read","EDB-ID":"40722","Date":"2016-11-07","Author":"Skylined","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40722.html"},
+		{"Title":"Microsoft Internet Explorer 9/10/11 - 'CDOMStringDataList::InitFromString' Out-of-Bounds Read (MS15-112)","EDB-ID":"39698","Date":"2016-04-14","Author":"Ashfaq Ansari","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/39698.html"},
+		{"Title":"Microsoft LSASS Service - DsRolerUpgradeDownlevelServer Overflow (MS04-011) (Metasploit)","EDB-ID":"16368","Date":"2010-07-03","Author":"Metasploit","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/16368.rb"},
+		{"Title":"Microsoft MsMpEng - Multiple Problems Handling ntdll!NtControlChannel Commands","EDB-ID":"42077","Date":"2017-05-26","Author":"Google Security Research","Type":"local","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/local/42077.txt"},
+		{"Title":"Microsoft OWC Spreadsheet - HTMLURL Buffer Overflow (MS09-043) (Metasploit)","EDB-ID":"16542","Date":"2010-04-30","Author":"Metasploit","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/16542.rb"},
+		{"Title":"Microsoft Office / COM Object - 'WMALFXGFXDSP.dll' DLL Planting (MS16-007)","EDB-ID":"39233","Date":"2016-01-13","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/39233.txt"},
+		{"Title":"Microsoft Office 2007 - 'OGL.dll' DpOutputSpanStretch::OutputSpan Out of Bounds Write (MS15-080)","EDB-ID":"37911","Date":"2015-08-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/37911.txt"},
+		{"Title":"Microsoft Office 2007 - 'OGL.dll' ValidateBitmapInfo Bounds Check Failure (MS15-097)","EDB-ID":"38217","Date":"2015-09-16","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/38217.txt"},
+		{"Title":"Microsoft Office PowerPoint 2010 - GDI 'GDI32!ConvertDxArray' Insufficient Bounds Check","EDB-ID":"41419","Date":"2017-02-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41419.txt"},
+		{"Title":"Microsoft Office PowerPoint 2010 - MSO/OART Heap Out-of-Bounds Access","EDB-ID":"41418","Date":"2017-02-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41418.txt"},
+		{"Title":"Microsoft Office Products - Array Index Bounds Error (PoC)","EDB-ID":"1615","Date":"2006-03-27","Author":"posidron","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/1615.txt"},
+		{"Title":"Microsoft Office Web Components (OWC) Spreadsheet - ActiveX Buffer Overflow (PoC)","EDB-ID":"9163","Date":"2009-07-16","Author":"anonymous","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/9163.txt"},
+		{"Title":"Microsoft Office Web Components (OWC) Spreadsheet - msDataSourceObject Memory Corruption (MS09-043) (Metasploit)","EDB-ID":"16537","Date":"2010-07-20","Author":"Metasploit","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/16537.rb"},
+		{"Title":"Microsoft Office Web Components Spreadsheet - ActiveX 'OWC10/11' Remote Overflow","EDB-ID":"9224","Date":"2009-07-21","Author":"Ahmed Obied","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/9224.py"},
+		{"Title":"Microsoft Site Server Commerce Edition 3.0 alpha - AdSamples Sensitive Information","EDB-ID":"19208","Date":"1999-05-11","Author":"Andrey Kruchkov","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/19208.txt"},
+		{"Title":"Microsoft Visual Basic Enterprise 6 SP6 - '.dsr' File Handling Buffer Overflow","EDB-ID":"4938","Date":"2008-01-18","Author":"shinnai","Type":"local","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/local/4938.py"},
+		{"Title":"Microsoft Visual Studio .NET - 'msdds.dll' Remote Code Execution","EDB-ID":"26167","Date":"2005-08-17","Author":"anonymous","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/26167.pl"},
+		{"Title":"Microsoft WININET.dll - 'CHttp­Header­Parser::Parse­Status­Line' Out-of-Bounds Read (MS16-104/MS16-105)","EDB-ID":"40747","Date":"2016-11-10","Author":"Skylined","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40747.html"},
+		{"Title":"Microsoft Windows - 'ATMFD.DLL' Out-of-Bounds Read Due to Malformed FDSelect Offset in the CFF Table","EDB-ID":"37916","Date":"2015-08-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/37916.txt"},
+		{"Title":"Microsoft Windows - 'ATMFD.DLL' Out-of-Bounds Read Due to Malformed Name INDEX in the CFF Table","EDB-ID":"37917","Date":"2015-08-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/37917.txt"},
+		{"Title":"Microsoft Windows - 'ATMFD.dll' CharString Stream Out-of-Bounds Reads (MS15-021)","EDB-ID":"37923","Date":"2015-08-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/37923.txt"},
+		{"Title":"Microsoft Windows - 'USP10!CreateIndexTable' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42237","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42237.txt"},
+		{"Title":"Microsoft Windows - 'USP10!MergeLigRecords' Uniscribe Font Processing Heap Memory Corruption","EDB-ID":"42234","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42234.txt"},
+		{"Title":"Microsoft Windows - 'USP10!NextCharInLiga' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42238","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42238.txt"},
+		{"Title":"Microsoft Windows - 'USP10!SubstituteNtoM' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42236","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42236.txt"},
+		{"Title":"Microsoft Windows - 'USP10!otlReverseChainingLookup::apply' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42241","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42241.txt"},
+		{"Title":"Microsoft Windows - 'USP10!otlSinglePosLookup::getCoverageTable' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42239","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42239.txt"},
+		{"Title":"Microsoft Windows - 'USP10!otlValueRecord::adjustPos' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42240","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42240.txt"},
+		{"Title":"Microsoft Windows - 'USP10!ttoGetTableData' Uniscribe Font Processing Out-of-Bounds Memory Read","EDB-ID":"42235","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42235.txt"},
+		{"Title":"Microsoft Windows - 'gdi32.dll' EMR_SETDIBITSTODEVICE Heap Out-of-Bounds Reads / Memory Disclosure","EDB-ID":"41363","Date":"2017-02-15","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41363.txt"},
+		{"Title":"Microsoft Windows - 'gdi32.dll' Multiple DIB-Related EMF Record Handlers Heap Out-of-Bounds Reads/Memory Disclosure (MS16-074)","EDB-ID":"39990","Date":"2016-06-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/39990.txt"},
+		{"Title":"Microsoft Windows - 'jscript!RegExpFncObj::LastParen' Out-of-Bounds Read","EDB-ID":"43372","Date":"2017-12-19","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/43372.html"},
+		{"Title":"Microsoft Windows - 'win32k.sys' TTF Font Processing win32k!fsc_BLTHoriz Out-of-Bounds Pool Write","EDB-ID":"37914","Date":"2015-08-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/37914.txt"},
+		{"Title":"Microsoft Windows - 'win32k.sys' TTF Font Processing win32k!fsc_RemoveDups Out-of-Bounds Pool Memory Access","EDB-ID":"37915","Date":"2015-08-21","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/37915.txt"},
+		{"Title":"Microsoft Windows - 'win32k.sys' TTF Processing RCVT TrueType Instruction Handler Out-of-Bounds Read (MS16-120)","EDB-ID":"40598","Date":"2016-10-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40598.txt"},
+		{"Title":"Microsoft Windows - GDI+ DecodeCompressedRLEBitmap Invalid Pointer Arithmetic Out-of-Bounds Write (MS16-097)","EDB-ID":"40255","Date":"2016-08-17","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40255.txt"},
+		{"Title":"Microsoft Windows - GDI+ ValidateBitmapInfo Invalid Pointer Arithmetic Out-of-Bounds Reads (MS16-097)","EDB-ID":"40256","Date":"2016-08-17","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40256.txt"},
+		{"Title":"Microsoft Windows - Uniscribe Font Processing Heap Memory Corruption in 'USP10!MergeLigRecords' (MS17-011)","EDB-ID":"41650","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41650.txt"},
+		{"Title":"Microsoft Windows - Uniscribe Font Processing Heap Out-of-Bounds Read/Write in 'USP10!AssignGlyphTypes' (MS17-011)","EDB-ID":"41648","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41648.txt"},
+		{"Title":"Microsoft Windows - Uniscribe Font Processing Heap Out-of-Bounds Write in 'USP10!UpdateGlyphFlags' (MS17-011)","EDB-ID":"41652","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41652.txt"},
+		{"Title":"Microsoft Windows - Uniscribe Font Processing Multiple Heap Out-of-Bounds and Wild Reads (MS17-011)","EDB-ID":"41655","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41655.txt"},
+		{"Title":"Microsoft Windows - Uniscribe Font Processing Out-of-Bounds Read in usp10!otlChainRuleSetTable::rule (MS17-011)","EDB-ID":"41646","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41646.txt"},
+		{"Title":"Microsoft Windows - Uniscribe Heap Out-of-Bounds Read in 'USP10!ScriptApplyLogicalWidth' Triggered via EMF (MS17-013)","EDB-ID":"41658","Date":"2017-03-20","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/41658.txt"},
+		{"Title":"Microsoft Windows - Win32k!xxxRealDrawMenuItem() Missing HBITMAP Bounds Checks","EDB-ID":"14668","Date":"2010-08-17","Author":"Tavis Ormandy","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/14668.txt"},
+		{"Title":"Microsoft Windows - nt!SeObjectCreateSaclAccessBits() Missed ACE Bounds Checks (MS10-047)","EDB-ID":"14670","Date":"2010-08-17","Author":"Tavis Ormandy","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/14670.txt"},
+		{"Title":"Microsoft Windows 7 Kernel - Pool-Based Out-of-Bounds Reads Due to bind() Implementation Bugs in afd.sys / tcpip.sys","EDB-ID":"42009","Date":"2017-05-15","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42009.txt"},
+		{"Title":"Microsoft Windows Kernel - 'ATMFD.DLL' Out-of-Bounds Read due to Malformed Name INDEX in the CFF Table","EDB-ID":"42243","Date":"2017-06-23","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42243.txt"},
+		{"Title":"Microsoft Windows Kernel - 'NtGdiGetTextExtentExW' Out-of-Bounds Memory Read","EDB-ID":"39648","Date":"2016-04-01","Author":"Nils Sommer","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/39648.txt"},
+		{"Title":"Microsoft Windows Kernel - 'win32k.sys' '.TTF' Font Processing Out-of-Bounds Read with Malformed 'glyf' Table 'win32k!fsc_CalcGrayRow' (Denial of Service)","EDB-ID":"42746","Date":"2017-09-18","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42746.txt"},
+		{"Title":"Microsoft Windows Kernel - 'win32k.sys' '.TTF' Font Processing Out-of-Bounds Reads/Writes with Malformed 'fpgm' table 'win32k!bGeneratePath' (Denial of Service)","EDB-ID":"42744","Date":"2017-09-18","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/42744.txt"},
+		{"Title":"Microsoft Windows Kernel - Registry Hive Loading 'nt!RtlEqualSid' Out-of-Bounds Read (MS16-138)","EDB-ID":"40766","Date":"2016-11-15","Author":"Google Security Research","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40766.txt"},
+		{"Title":"Microsoft Windows Media Services 4.0/4.1 - Handshake Sequence Denial of Service","EDB-ID":"19759","Date":"2000-01-18","Author":"Kit Knox","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/19759.c"},
+		{"Title":"Microsoft Windows Server 2008/2012 - LDAP RootDSE Netlogon Denial of Service","EDB-ID":"40703","Date":"2016-11-08","Author":"Todor Donev","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40703.pl"},
+		{"Title":"Microsoft Word 2007/2010/2013/2016 - Out-of-Bounds Read Code Execution (MS16-099)","EDB-ID":"40224","Date":"2016-08-10","Author":"COSIG","Type":"local","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/local/40224.txt"},
+		{"Title":"Microsoft Works 8.0 Spreadsheet - Multiple Vulnerabilities","EDB-ID":"28222","Date":"2006-06-14","Author":"Benjamin Franz","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/28222.txt"}
+	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "nfs or iis",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "lsa or nterm",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "ms lsa",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [
+		{"Title":"Microsoft LSASS Service - DsRolerUpgradeDownlevelServer Overflow (MS04-011) (Metasploit)","EDB-ID":"16368","Date":"2010-07-03","Author":"Metasploit","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/16368.rb"},
+		{"Title":"Microsoft Windows - 'Lsasrv.dll' RPC Remote Buffer Overflow (MS04-011)","EDB-ID":"293","Date":"2004-04-24","Author":"sbaa","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/293.c"},
+		{"Title":"Microsoft Windows - ASN.1 'LSASS.exe' Remote Denial of Service (MS04-007)","EDB-ID":"153","Date":"2004-02-14","Author":"Christophe Devine","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/153.c"},
+		{"Title":"Microsoft Windows - LSASS SMB NTLM Exchange Null-Pointer Dereference (MS16-137)","EDB-ID":"40744","Date":"2016-11-09","Author":"laurent gaffie","Type":"dos","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/dos/40744.txt"},
+		{"Title":"Microsoft Windows XP/2000 - 'Lsasrv.dll' Remote Universal (MS04-011)","EDB-ID":"295","Date":"2004-04-29","Author":"houseofdabus","Type":"remote","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/remote/295.c"}
+	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "ms wbt server",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "radmin",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [
+		{"Title":"Agora 1.4 RC1 - 'MysqlfinderAdmin.php' Remote File Inclusion","EDB-ID":"2726","Date":"2006-11-06","Author":"the_day","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/2726.txt"},
+		{"Title":"Basic Analysis and Security Engine (BASE) 1.4.5 - '/admin/base_useradmin.php?base_path' Remote File Inclusion","EDB-ID":"36758","Date":"2012-02-11","Author":"indoushka","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/36758.txt"},
+		{"Title":"GSX Analyzer 10.12/11 - 'main.swf' Hard-Coded Superadmin Credentials","EDB-ID":"40106","Date":"2016-07-13","Author":"ndevnull","Type":"webapps","Platform":"windows","Path":"/usr/share/exploitdb/exploits/windows/webapps/40106.txt"},
+		{"Title":"Joomla! Component com_poweradmin 2.3.0 - Multiple Vulnerabilities","EDB-ID":"39506","Date":"2016-02-26","Author":"RatioSec Research","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/39506.txt"},
+		{"Title":"MyBB Extended Useradmininfo Plugin 1.2.1 - Cross-Site Scripting","EDB-ID":"31525","Date":"2014-02-09","Author":"Fikri Fadzil","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/31525.txt"},
+		{"Title":"Poweradmin - 'index.php' Cross-Site Scripting","EDB-ID":"37828","Date":"2012-09-20","Author":"Siavash","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/37828.txt"},
+		{"Title":"ZKTeco ZKBioSecurity 3.0 - Cross-Site Request Forgery (Add Superadmin)","EDB-ID":"40325","Date":"2016-08-31","Author":"LiquidWorm","Type":"webapps","Platform":"jsp","Path":"/usr/share/exploitdb/exploits/jsp/webapps/40325.html"},
+		{"Title":"phpLiterAdmin 1.0 RC1 - Authentication Bypass","EDB-ID":"15322","Date":"2010-10-27","Author":"High-Tech Bridge SA","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/15322.txt"},
+		{"Title":"up.time 7.5.0 - Superadmin Privilege Escalation","EDB-ID":"37885","Date":"2015-08-19","Author":"LiquidWorm","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/37885.html"},
+		{"Title":"vBulletin 4.1.12 - 'blog_plugin_useradmin.php' SQL Injection","EDB-ID":"37807","Date":"2012-09-18","Author":"Am!r","Type":"webapps","Platform":"php","Path":"/usr/share/exploitdb/exploits/php/webapps/37807.txt"}
+	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+
+{
+	"SEARCH": "wsdapi",
+	"DB_PATH_EXPLOIT": "/usr/share/exploitdb",
+	"RESULTS_EXPLOIT": [	],
+	"DB_PATH_SHELLCODE": "/usr/share/exploitdb",
+	"RESULTS_SHELLCODE": [	]
+}
+
+

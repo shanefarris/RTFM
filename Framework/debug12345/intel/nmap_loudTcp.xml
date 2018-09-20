@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.70 scan initiated Thu Jun 28 22:27:12 2018 as: nmap -sT -sV -A -T4 -p1-65535 -oX ./debug12345/intel/nmap_loudTcp.xml 192.168.159.139 -->
+<nmaprun scanner="nmap" args="nmap -sT -sV -A -T4 -p1-65535 -oX ./debug12345/intel/nmap_loudTcp.xml 192.168.159.139" start="1530242832" startstr="Thu Jun 28 22:27:12 2018" version="7.70" xmloutputversion="1.04">
+<scaninfo type="connect" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1530242833" endtime="1530242857"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.159.139" addrtype="ipv4"/>
+<address addr="00:0C:29:E0:38:F3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65522">
+<extrareasons reason="conn-refused" count="65522"/>
+</extraports>
+<port protocol="tcp" portid="21"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ftp" product="ProFTPD" version="1.3.1" ostype="Unix" method="probed" conf="10"><cpe>cpe:/a:proftpd:proftpd:1.3.1</cpe></service></port>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" product="OpenSSH" version="4.7p1 Debian 8ubuntu1" extrainfo="protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:4.7p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service><script id="ssh-hostkey" output="&#xa;  1024 60:0f:cf:e1:c0:5f:6a:74:d6:90:24:fa:c4:d5:6c:cd (DSA)&#xa;  2048 56:56:24:0f:21:1d:de:a7:2b:ae:61:b1:24:3d:e8:f3 (RSA)"><table>
+<elem key="type">ssh-dss</elem>
+<elem key="key">AAAAB3NzaC1kc3MAAACBALz4hsc8a2Srq4nlW960qV8xwBG0JC+jI7fWxm5METIJH4tKr/xUTwsTYEYnaZLzcOiy21D3ZvOwYb6AA3765zdgCd2Tgand7F0YD5UtXG7b7fbz99chReivL0SIWEG/E96Ai+pqYMP2WD5KaOJwSIXSUajnU5oWmY5x85sBw+XDAAAAFQDFkMpmdFQTF+oRqaoSNVU7Z+hjSwAAAIBCQxNKzi1TyP+QJIFa3M0oLqCVWI0We/ARtXrzpBOJ/dt0hTJXCeYisKqcdwdtyIn8OUCOyrIjqNuA2QW217oQ6wXpbFh+5AQm8Hl3b6C6o8lX3Ptw+Y4dp0lzfWHwZ/jzHwtuaDQaok7u1f971lEazeJLqfiWrAzoklqSWyDQJAAAAIA1lAD3xWYkeIeHv/R3P9i+XaoI7imFkMuYXCDTq843YU6Td+0mWpllCqAWUV/CQamGgQLtYy5S0ueoks01MoKdOMMhKVwqdr08nvCBdNKjIEd3gH6oBk/YRnjzxlEAYBsvCmM4a0jmhz0oNiRWlc/F+bkUeFKrBx/D2fdfZmhrGg==</elem>
+<elem key="bits">1024.0</elem>
+<elem key="fingerprint">600fcfe1c05f6a74d69024fac4d56ccd</elem>
+</table>
+<table>
+<elem key="type">ssh-rsa</elem>
+<elem key="key">AAAAB3NzaC1yc2EAAAABIwAAAQEAstqnuFMBOZvO3WTEjP4TUdjgWkIVNdTq6kboEDjteOfc65TlI7sRvQBwqAhQjeeyyIk8T55gMDkOD0akSlSXvLDcmcdYfxeIF0ZSuT+nkRhij7XSSA/Oc5QSk3sJ/SInfb78e3anbRHpmkJcVgETJ5WhKObUNf1AKZW++4Xlc63M4KI5cjvMMIPEVOyR3AKmI78Fo3HJjYucg87JjLeC66I7+dlEYX6zT8i1XYwa/L1vZ3qSJISGVu8kRPikMv/cNSvki4j+qDYyZ2E5497W87+Ed46/8P42LNGoOV8OcX/ro6pAcbEPUdUEfkJrqi2YXbhvwIJ0gFMb6wfe5cnQew==</elem>
+<elem key="bits">2048.0</elem>
+<elem key="fingerprint">5656240f211ddea72bae61b1243de8f3</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="23"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="telnet" product="Linux telnetd" ostype="Linux" method="probed" conf="10"><cpe>cpe:/o:linux:linux_kernel</cpe></service></port>
+<port protocol="tcp" portid="25"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="smtp" product="Postfix smtpd" hostname=" metasploitable.localdomain" method="probed" conf="10"><cpe>cpe:/a:postfix:postfix</cpe></service><script id="smtp-commands" output="metasploitable.localdomain, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN, "/><script id="ssl-cert" output="Subject: commonName=ubuntu804-base.localdomain/organizationName=OCOSA/stateOrProvinceName=There is no such thing outside US/countryName=XX&#xa;Not valid before: 2010-03-17T14:07:45&#xa;Not valid after:  2010-04-16T14:07:45"><table key="subject">
+<elem key="localityName">Everywhere</elem>
+<elem key="commonName">ubuntu804-base.localdomain</elem>
+<elem key="emailAddress">root@ubuntu804-base.localdomain</elem>
+<elem key="organizationName">OCOSA</elem>
+<elem key="stateOrProvinceName">There is no such thing outside US</elem>
+<elem key="organizationalUnitName">Office for Complication of Otherwise Simple Affairs</elem>
+<elem key="countryName">XX</elem>
+</table>
+<table key="issuer">
+<elem key="localityName">Everywhere</elem>
+<elem key="commonName">ubuntu804-base.localdomain</elem>
+<elem key="emailAddress">root@ubuntu804-base.localdomain</elem>
+<elem key="organizationName">OCOSA</elem>
+<elem key="stateOrProvinceName">There is no such thing outside US</elem>
+<elem key="organizationalUnitName">Office for Complication of Otherwise Simple Affairs</elem>
+<elem key="countryName">XX</elem>
+</table>
+<table key="pubkey">
+<elem key="type">rsa</elem>
+<elem key="bits">1024</elem>
+<elem key="exponent">userdata: 0x56216d445808</elem>
+<elem key="modulus">userdata: 0x56216d445848</elem>
+</table>
+<elem key="sig_algo">sha1WithRSAEncryption</elem>
+<table key="validity">
+<elem key="notBefore">2010-03-17T14:07:45</elem>
+<elem key="notAfter">2010-04-16T14:07:45</elem>
+</table>
+<elem key="md5">dcd9ad906c8f2f7374af383b25408828</elem>
+<elem key="sha1">ed093088706603bfd5dc237399b498da2d4d31c6</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDWzCCAsQCCQD6+TpMf7a5zDANBgkqhkiG9w0BAQUFADCB8TELMAkGA1UEBhMC&#xa;WFgxKjAoBgNVBAgTIVRoZXJlIGlzIG5vIHN1Y2ggdGhpbmcgb3V0c2lkZSBVUzET&#xa;MBEGA1UEBxMKRXZlcnl3aGVyZTEOMAwGA1UEChMFT0NPU0ExPDA6BgNVBAsTM09m&#xa;ZmljZSBmb3IgQ29tcGxpY2F0aW9uIG9mIE90aGVyd2lzZSBTaW1wbGUgQWZmYWly&#xa;czEjMCEGA1UEAxMadWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4xLjAsBgkqhkiG&#xa;9w0BCQEWH3Jvb3RAdWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4wHhcNMTAwMzE3&#xa;MTQwNzQ1WhcNMTAwNDE2MTQwNzQ1WjCB8TELMAkGA1UEBhMCWFgxKjAoBgNVBAgT&#xa;IVRoZXJlIGlzIG5vIHN1Y2ggdGhpbmcgb3V0c2lkZSBVUzETMBEGA1UEBxMKRXZl&#xa;cnl3aGVyZTEOMAwGA1UEChMFT0NPU0ExPDA6BgNVBAsTM09mZmljZSBmb3IgQ29t&#xa;cGxpY2F0aW9uIG9mIE90aGVyd2lzZSBTaW1wbGUgQWZmYWlyczEjMCEGA1UEAxMa&#xa;dWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4xLjAsBgkqhkiG9w0BCQEWH3Jvb3RA&#xa;dWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4wgZ8wDQYJKoZIhvcNAQEBBQADgY0A&#xa;MIGJAoGBANa0EzYzmpVxexvefIN12nGxPKl//q1kG3fpT66+ytT4y++uu0N5JHP/&#xa;POWeO238yLGs+kxNXptMmVQL16hKULqp3h0f9ORrAqP0a0XNTK+NiWIzj2W7NmGf&#xa;xCxzwU4uoKgUTphwRmG70bkx34yZ7nVreTxAoK6XAJCd3JkNM6S1AgMBAAEwDQYJ&#xa;KoZIhvcNAQEFBQADgYEAkqS0uBRVYyVRSgvDKiLPOvgXagzPZqqnZS9Ibc3jPlyf&#xa;d2zURFQfHoRPjtSN3awtiAkhqNpWLKkFPEloNRl1DNpTI4iIGS10JsEiZe4RaINq&#xa;U0qcJ8ugtOmNKQyyPBhcZ8xTph4w0Komex6uQLkpAWwuvKIZlHwVbo0wOPbKLnU=&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="ssl-date" output="2018-06-29T03:27:34+00:00; +6s from scanner time."><elem key="delta">6.0</elem>
+<elem key="date">2018-06-29T03:27:34+00:00</elem>
+</script><script id="sslv2" output="&#xa;  SSLv2 supported&#xa;  ciphers: &#xa;    SSL2_RC4_128_EXPORT40_WITH_MD5&#xa;    SSL2_DES_64_CBC_WITH_MD5&#xa;    SSL2_RC2_128_CBC_WITH_MD5&#xa;    SSL2_DES_192_EDE3_CBC_WITH_MD5&#xa;    SSL2_RC2_128_CBC_EXPORT40_WITH_MD5&#xa;    SSL2_RC4_128_WITH_MD5"><elem>SSLv2 supported</elem>
+<table key="ciphers">
+<elem>SSL2_RC4_128_EXPORT40_WITH_MD5</elem>
+<elem>SSL2_DES_64_CBC_WITH_MD5</elem>
+<elem>SSL2_RC2_128_CBC_WITH_MD5</elem>
+<elem>SSL2_DES_192_EDE3_CBC_WITH_MD5</elem>
+<elem>SSL2_RC2_128_CBC_EXPORT40_WITH_MD5</elem>
+<elem>SSL2_RC4_128_WITH_MD5</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="domain" product="ISC BIND" version="9.4.2" method="probed" conf="10"><cpe>cpe:/a:isc:bind:9.4.2</cpe></service><script id="dns-nsid" output="&#xa;  bind.version: 9.4.2"><elem key="bind.version">9.4.2</elem>
+</script></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Apache httpd" version="2.2.8" extrainfo="(Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch" method="probed" conf="10"><cpe>cpe:/a:apache:http_server:2.2.8</cpe></service><script id="http-methods" output="&#xa;  Potentially risky methods: TRACE"><table key="Potentially risky methods">
+<elem>TRACE</elem>
+</table>
+</script><script id="http-server-header" output="Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch"><elem>Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch</elem>
+</script><script id="http-title" output="Site doesn&apos;t have a title (text/html)."></script></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="netbios-ssn" product="Samba smbd" version="3.X - 4.X" extrainfo="workgroup: WORKGROUP" method="probed" conf="10"><cpe>cpe:/a:samba:samba</cpe></service></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="netbios-ssn" product="Samba smbd" version="3.0.20-Debian" extrainfo="workgroup: WORKGROUP" method="probed" conf="10"><cpe>cpe:/a:samba:samba</cpe></service></port>
+<port protocol="tcp" portid="3306"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="mysql" product="MySQL" version="5.0.51a-3ubuntu5" method="probed" conf="10"><cpe>cpe:/a:mysql:mysql:5.0.51a-3ubuntu5</cpe></service><script id="mysql-info" output="&#xa;  Protocol: 10&#xa;  Version: 5.0.51a-3ubuntu5&#xa;  Thread ID: 9&#xa;  Capabilities flags: 43564&#xa;  Some Capabilities: Support41Auth, SwitchToSSLAfterHandshake, LongColumnFlag, Speaks41ProtocolNew, SupportsTransactions, SupportsCompression, ConnectWithDatabase&#xa;  Status: Autocommit&#xa;  Salt: g@K5g(.N&quot;YzzvacO?0rl"><elem key="Protocol">10</elem>
+<elem key="Version">5.0.51a-3ubuntu5</elem>
+<elem key="Thread ID">9</elem>
+<elem key="Capabilities flags">43564</elem>
+<table key="Some Capabilities">
+<elem>Support41Auth</elem>
+<elem>SwitchToSSLAfterHandshake</elem>
+<elem>LongColumnFlag</elem>
+<elem>Speaks41ProtocolNew</elem>
+<elem>SupportsTransactions</elem>
+<elem>SupportsCompression</elem>
+<elem>ConnectWithDatabase</elem>
+</table>
+<elem key="Status">Autocommit</elem>
+<elem key="Salt">g@K5g(.N&quot;YzzvacO?0rl</elem>
+</script></port>
+<port protocol="tcp" portid="3632"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="distccd" product="distccd" version="v1" extrainfo="(GNU) 4.2.4 (Ubuntu 4.2.4-1ubuntu4)" method="probed" conf="10"/></port>
+<port protocol="tcp" portid="5432"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="postgresql" product="PostgreSQL DB" version="8.3.0 - 8.3.7" method="probed" conf="10"><cpe>cpe:/a:postgresql:postgresql:8.3</cpe></service><script id="ssl-cert" output="Subject: commonName=ubuntu804-base.localdomain/organizationName=OCOSA/stateOrProvinceName=There is no such thing outside US/countryName=XX&#xa;Not valid before: 2010-03-17T14:07:45&#xa;Not valid after:  2010-04-16T14:07:45"><table key="subject">
+<elem key="localityName">Everywhere</elem>
+<elem key="commonName">ubuntu804-base.localdomain</elem>
+<elem key="emailAddress">root@ubuntu804-base.localdomain</elem>
+<elem key="organizationName">OCOSA</elem>
+<elem key="stateOrProvinceName">There is no such thing outside US</elem>
+<elem key="organizationalUnitName">Office for Complication of Otherwise Simple Affairs</elem>
+<elem key="countryName">XX</elem>
+</table>
+<table key="issuer">
+<elem key="localityName">Everywhere</elem>
+<elem key="commonName">ubuntu804-base.localdomain</elem>
+<elem key="emailAddress">root@ubuntu804-base.localdomain</elem>
+<elem key="organizationName">OCOSA</elem>
+<elem key="stateOrProvinceName">There is no such thing outside US</elem>
+<elem key="organizationalUnitName">Office for Complication of Otherwise Simple Affairs</elem>
+<elem key="countryName">XX</elem>
+</table>
+<table key="pubkey">
+<elem key="type">rsa</elem>
+<elem key="bits">1024</elem>
+<elem key="exponent">userdata: 0x56216d8096c8</elem>
+<elem key="modulus">userdata: 0x56216cc068a8</elem>
+</table>
+<elem key="sig_algo">sha1WithRSAEncryption</elem>
+<table key="validity">
+<elem key="notBefore">2010-03-17T14:07:45</elem>
+<elem key="notAfter">2010-04-16T14:07:45</elem>
+</table>
+<elem key="md5">dcd9ad906c8f2f7374af383b25408828</elem>
+<elem key="sha1">ed093088706603bfd5dc237399b498da2d4d31c6</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDWzCCAsQCCQD6+TpMf7a5zDANBgkqhkiG9w0BAQUFADCB8TELMAkGA1UEBhMC&#xa;WFgxKjAoBgNVBAgTIVRoZXJlIGlzIG5vIHN1Y2ggdGhpbmcgb3V0c2lkZSBVUzET&#xa;MBEGA1UEBxMKRXZlcnl3aGVyZTEOMAwGA1UEChMFT0NPU0ExPDA6BgNVBAsTM09m&#xa;ZmljZSBmb3IgQ29tcGxpY2F0aW9uIG9mIE90aGVyd2lzZSBTaW1wbGUgQWZmYWly&#xa;czEjMCEGA1UEAxMadWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4xLjAsBgkqhkiG&#xa;9w0BCQEWH3Jvb3RAdWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4wHhcNMTAwMzE3&#xa;MTQwNzQ1WhcNMTAwNDE2MTQwNzQ1WjCB8TELMAkGA1UEBhMCWFgxKjAoBgNVBAgT&#xa;IVRoZXJlIGlzIG5vIHN1Y2ggdGhpbmcgb3V0c2lkZSBVUzETMBEGA1UEBxMKRXZl&#xa;cnl3aGVyZTEOMAwGA1UEChMFT0NPU0ExPDA6BgNVBAsTM09mZmljZSBmb3IgQ29t&#xa;cGxpY2F0aW9uIG9mIE90aGVyd2lzZSBTaW1wbGUgQWZmYWlyczEjMCEGA1UEAxMa&#xa;dWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4xLjAsBgkqhkiG9w0BCQEWH3Jvb3RA&#xa;dWJ1bnR1ODA0LWJhc2UubG9jYWxkb21haW4wgZ8wDQYJKoZIhvcNAQEBBQADgY0A&#xa;MIGJAoGBANa0EzYzmpVxexvefIN12nGxPKl//q1kG3fpT66+ytT4y++uu0N5JHP/&#xa;POWeO238yLGs+kxNXptMmVQL16hKULqp3h0f9ORrAqP0a0XNTK+NiWIzj2W7NmGf&#xa;xCxzwU4uoKgUTphwRmG70bkx34yZ7nVreTxAoK6XAJCd3JkNM6S1AgMBAAEwDQYJ&#xa;KoZIhvcNAQEFBQADgYEAkqS0uBRVYyVRSgvDKiLPOvgXagzPZqqnZS9Ibc3jPlyf&#xa;d2zURFQfHoRPjtSN3awtiAkhqNpWLKkFPEloNRl1DNpTI4iIGS10JsEiZe4RaINq&#xa;U0qcJ8ugtOmNKQyyPBhcZ8xTph4w0Komex6uQLkpAWwuvKIZlHwVbo0wOPbKLnU=&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="ssl-date" output="2018-06-29T03:27:34+00:00; +5s from scanner time."><elem key="delta">5.0</elem>
+<elem key="date">2018-06-29T03:27:34+00:00</elem>
+</script></port>
+<port protocol="tcp" portid="8009"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ajp13" product="Apache Jserv" extrainfo="Protocol v1.3" method="probed" conf="10"/><script id="ajp-methods" output="Failed to get a valid response for the OPTION request"/></port>
+<port protocol="tcp" portid="8180"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Apache Tomcat/Coyote JSP engine" version="1.1" method="probed" conf="10"><cpe>cpe:/a:apache:coyote_http_connector:1.1</cpe></service><script id="http-favicon" output="Apache Tomcat"/><script id="http-server-header" output="Apache-Coyote/1.1"><elem>Apache-Coyote/1.1</elem>
+</script><script id="http-title" output="Apache Tomcat/5.5"><elem key="title">Apache Tomcat/5.5</elem>
+</script></port>
+</ports>
+<os><portused state="open" proto="tcp" portid="21"/>
+<portused state="closed" proto="tcp" portid="1"/>
+<portused state="closed" proto="udp" portid="31145"/>
+<osmatch name="Linux 2.6.9 - 2.6.33" accuracy="100" line="59153">
+<osclass type="general purpose" vendor="Linux" osfamily="Linux" osgen="2.6.X" accuracy="100"><cpe>cpe:/o:linux:linux_kernel:2.6</cpe></osclass>
+</osmatch>
+</os>
+<uptime seconds="12004" lastboot="Thu Jun 28 19:07:33 2018"/>
+<distance value="1"/>
+<tcpsequence index="199" difficulty="Good luck!" values="3A2BE962,3A72C0CD,3A646AE3,3A4BB9DE,3AADBF2C,3A3585A6"/>
+<ipidsequence class="All zeros" values="0,0,0,0,0,0"/>
+<tcptssequence class="100HZ" values="124D84,124D8E,124D98,124DA2,124DAC,124DB6"/>
+<hostscript><script id="clock-skew" output="mean: 1h20m05s, deviation: 2h18m34s, median: 5s"><elem key="stddev">8314</elem>
+<elem key="median">5</elem>
+<elem key="mean">4805</elem>
+</script><script id="nbstat" output="NetBIOS name: METASPLOITABLE, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)"><elem key="server_name">METASPLOITABLE</elem>
+<table key="statistics">
+<elem>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</elem>
+<elem>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</elem>
+<elem>00 00 00 00 00 00 00 00 00 00 00 00 00 00</elem>
+</table>
+<table key="names">
+<table>
+<elem key="suffix">0</elem>
+<elem key="flags">1024</elem>
+<elem key="name">METASPLOITABLE</elem>
+</table>
+<table>
+<elem key="suffix">3</elem>
+<elem key="flags">1024</elem>
+<elem key="name">METASPLOITABLE</elem>
+</table>
+<table>
+<elem key="suffix">32</elem>
+<elem key="flags">1024</elem>
+<elem key="name">METASPLOITABLE</elem>
+</table>
+<table>
+<elem key="suffix">0</elem>
+<elem key="flags">33792</elem>
+<elem key="name">WORKGROUP</elem>
+</table>
+<table>
+<elem key="suffix">30</elem>
+<elem key="flags">33792</elem>
+<elem key="name">WORKGROUP</elem>
+</table>
+</table>
+<elem key="user">&lt;unknown&gt;</elem>
+<table key="mac">
+<elem key="address">&lt;unknown&gt;</elem>
+<elem key="manuf">unknown</elem>
+</table>
+</script><script id="smb-os-discovery" output="&#xa;  OS: Unix (Samba 3.0.20-Debian)&#xa;  NetBIOS computer name: &#xa;  Workgroup: WORKGROUP\x00&#xa;  System time: 2018-06-28T23:27:34-04:00&#xa;"><elem key="os">Unix</elem>
+<elem key="lanmanager">Samba 3.0.20-Debian</elem>
+<elem key="domain">WORKGROUP\x00</elem>
+<elem key="server"></elem>
+<elem key="date">2018-06-28T23:27:34-04:00</elem>
+</script><script id="smb2-time" output="Protocol negotiation failed (SMB2)"/></hostscript><trace>
+<hop ttl="1" ipaddr="192.168.159.139" rtt="0.13"/>
+</trace>
+<times srtt="131" rttvar="87" to="100000"/>
+</host>
+<runstats><finished time="1530242857" timestr="Thu Jun 28 22:27:37 2018" elapsed="24.80" summary="Nmap done at Thu Jun 28 22:27:37 2018; 1 IP address (1 host up) scanned in 24.80 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

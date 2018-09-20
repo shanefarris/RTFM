@@ -1,0 +1,64 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+START_TIME: Sun Aug 12 22:34:42 2018
+URL_BASE: http://192.168.159.139/
+WORDLIST_FILES: /usr/share/wordlists/dirb/common.txt
+OPTION: Silent Mode
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://192.168.159.139/ ----
++ http://192.168.159.139/cgi-bin/ (CODE:403|SIZE:331)
++ http://192.168.159.139/index (CODE:200|SIZE:45)
++ http://192.168.159.139/index.html (CODE:200|SIZE:45)
++ http://192.168.159.139/phpinfo (CODE:200|SIZE:47588)
++ http://192.168.159.139/phpinfo.php (CODE:200|SIZE:47406)
++ http://192.168.159.139/server-status (CODE:403|SIZE:336)
+==> DIRECTORY: http://192.168.159.139/twiki/
+
+---- Entering directory: http://192.168.159.139/twiki/ ----
+==> DIRECTORY: http://192.168.159.139/twiki/bin/
++ http://192.168.159.139/twiki/data (CODE:403|SIZE:333)
++ http://192.168.159.139/twiki/index (CODE:200|SIZE:782)
++ http://192.168.159.139/twiki/index.html (CODE:200|SIZE:782)
+==> DIRECTORY: http://192.168.159.139/twiki/lib/
++ http://192.168.159.139/twiki/license (CODE:200|SIZE:19440)
+==> DIRECTORY: http://192.168.159.139/twiki/pub/
++ http://192.168.159.139/twiki/readme (CODE:200|SIZE:4334)
++ http://192.168.159.139/twiki/templates (CODE:403|SIZE:338)
+
+---- Entering directory: http://192.168.159.139/twiki/bin/ ----
++ http://192.168.159.139/twiki/bin/attach (CODE:200|SIZE:4362)
++ http://192.168.159.139/twiki/bin/changes (CODE:200|SIZE:21791)
++ http://192.168.159.139/twiki/bin/edit (CODE:200|SIZE:5351)
++ http://192.168.159.139/twiki/bin/manage (CODE:302|SIZE:0)
++ http://192.168.159.139/twiki/bin/passwd (CODE:302|SIZE:0)
++ http://192.168.159.139/twiki/bin/preview (CODE:302|SIZE:0)
++ http://192.168.159.139/twiki/bin/register (CODE:302|SIZE:0)
++ http://192.168.159.139/twiki/bin/save (CODE:302|SIZE:0)
++ http://192.168.159.139/twiki/bin/search (CODE:200|SIZE:3554)
++ http://192.168.159.139/twiki/bin/statistics (CODE:200|SIZE:534)
++ http://192.168.159.139/twiki/bin/upload (CODE:302|SIZE:0)
++ http://192.168.159.139/twiki/bin/view (CODE:200|SIZE:10054)
++ http://192.168.159.139/twiki/bin/viewfile (CODE:302|SIZE:0)
+
+---- Entering directory: http://192.168.159.139/twiki/lib/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+---- Entering directory: http://192.168.159.139/twiki/pub/ ----
++ http://192.168.159.139/twiki/pub/favicon.ico (CODE:200|SIZE:1078)
+==> DIRECTORY: http://192.168.159.139/twiki/pub/Main/
+
+---- Entering directory: http://192.168.159.139/twiki/pub/Main/ ----
+
+-----------------
+END_TIME: Sun Aug 12 22:34:54 2018
+DOWNLOADED: 27672 - FOUND: 26

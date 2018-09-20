@@ -1,0 +1,26 @@
+
+
+
+ AVAILABLE PLUGINS
+ -----------------
+
+  PluginOpenSSLCipherSuites
+  PluginCertInfo
+  PluginCompression
+  PluginHSTS
+  PluginSessionResumption
+  PluginHeartbleed
+  PluginSessionRenegotiation
+  PluginChromeSha1Deprecation
+
+
+
+ CHECKING HOST(S) AVAILABILITY
+ -----------------------------
+
+   192.168.159.139                     => WARNING: Connection rejected; discarding corresponding tasks.
+
+
+
+ SCAN COMPLETED IN 0.13 S
+ ------------------------

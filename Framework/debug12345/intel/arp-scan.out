@@ -1,0 +1,9 @@
+Interface: eth0, datalink type: EN10MB (Ethernet)
+Starting arp-scan 1.9 with 256 hosts (http://www.nta-monitor.com/tools/arp-scan/)
+192.168.159.1	00:50:56:c0:00:08	VMware, Inc.
+192.168.159.2	00:50:56:ec:ea:47	VMware, Inc.
+192.168.159.139	00:0c:29:e0:38:f3	VMware, Inc.
+192.168.159.254	00:50:56:ff:9b:7e	VMware, Inc.
+
+4 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9: 256 hosts scanned in 2.621 seconds (97.67 hosts/sec). 4 responded

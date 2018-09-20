@@ -1,0 +1,9 @@
+09/18/2018 10:36:57 AM dir
+09/18/2018 11:10:23 AM dir
+09/18/2018 01:46:40 PM ls
+09/18/2018 01:54:21 PM name 'f' is not defined
+Traceback (most recent call last):
+  File "Z:\RTFM\Framework\Session.py", line 105, in start
+    print(f)
+NameError: name 'f' is not defined
+09/18/2018 01:55:50 PM name 'f' is not defined

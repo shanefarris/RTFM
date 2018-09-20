@@ -1,0 +1,23 @@
+tshark located at /usr/bin/tshark
+Querying tshark for capture devices; tshark output follows:
+Running as user "root" and group "root". This could be dangerous.
+tshark: Lua: Error during loading:
+ [string "/usr/share/wireshark/init.lua"]:44: dofile has been disabled due to running Wireshark as superuser. See https://wiki.wireshark.org/CaptureSetup/CapturePrivileges for help in running Wireshark as an unprivileged user.
+1. eth0
+2. any
+3. lo (Loopback)
+4. nflog
+5. nfqueue
+6. usbmon1
+7. usbmon2
+8. cisco (Cisco remote capture)
+9. randpkt (Random packet generator)
+10. ssh (SSH remote capture)
+11. udpdump (UDP Listener remote capture)
+Capture device search completed with 11 devices found.
+
+
+Cookie Cadger (v1.06, https://cookiecadger.com)
+Created by Matthew Sullivan - mattslifebytes.com
+This software is freely distributed under the terms of the FreeBSD license.
+

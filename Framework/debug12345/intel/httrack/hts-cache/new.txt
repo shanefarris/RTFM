@@ -1,0 +1,3 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+21:28:13	329/329	---M--	404	error ('Not%20Found')	text/html	date:Wed,%2027%20Jun%202018%2002:28:12%20GMT	http://192.168.159.139/robots.txt		(from )
+21:28:13	45/45	---M--	200	added ('OK')	text/html	etag:%22107f7-2d-481ffa5ca8840%22	http://192.168.159.139/	./debug12345/intel/httrack/192.168.159.139/index.html	(from )

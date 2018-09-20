@@ -1,0 +1,12 @@
+root:
+root:123456
+root:password
+root:admin
+admin:
+admin:password
+admin:admin
+administrator:password
+administrator:administrator
+guest:
+guest:password
+guest:guest

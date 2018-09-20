@@ -1,0 +1,324 @@
+{
+    "SESSION": [
+        {
+            "rhost": "192.168.159.139",
+            "rport": "all",
+            "target_os": "Linux",
+            "session_id": ".\\debug12345",
+            "threads": "50",
+            "wordlist": "rockyou.txt",
+            "http_wordlist": "/usr/share/wordlists/rockyou.txt",
+            "db_wordlist": "db_list.txt",
+            "userlist": "users.txt"
+        }
+    ],
+    "SERVICES": [
+        {
+            "name": "ftp",
+            "port": "21",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "ssh",
+            "port": "22",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "telnet",
+            "port": "23",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "smtp",
+            "port": "25",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "domain",
+            "port": "53",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "http",
+            "port": "80",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "samba",
+            "port": "139",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "samba",
+            "port": "445",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "mysql",
+            "port": "3306",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "distccd",
+            "port": "3632",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "postgresql",
+            "port": "5432",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "ajp13",
+            "port": "8009",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        },
+        {
+            "name": "http",
+            "port": "8180",
+            "protocol": "tcp",
+            "status": "open",
+            "version": ""
+        }
+    ],
+    "ATTACKS": [],
+    "HTTP_DIR": [
+        {
+            "dir": "test"
+        },
+        {
+            "dir": "test2"
+        },
+        {
+            "dir": "http://192.168.159.139/_/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/0/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/00/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/twiki/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/twiki/bin/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/twiki/lib/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/twiki/pub/\n"
+        },
+        {
+            "dir": "http://192.168.159.139/twiki/pub/Main/\n"
+        }
+    ],
+    "HTTP_FILE": [
+        {
+            "file": "test"
+        },
+        {
+            "file": "test2"
+        },
+        {
+            "file": "http://192.168.159.139/01"
+        },
+        {
+            "file": "http://192.168.159.139/index"
+        },
+        {
+            "file": "http://192.168.159.139/index.html"
+        },
+        {
+            "file": "http://192.168.159.139/phpinfo"
+        },
+        {
+            "file": "http://192.168.159.139/phpinfo.php"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/index"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/index.html"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/license"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/readme"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/bin/attach"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/bin/changes"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/bin/edit"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/bin/search"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/bin/statistics"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/bin/view"
+        },
+        {
+            "file": "http://192.168.159.139/twiki/pub/favicon.ico"
+        }
+    ],
+    "NOTES": [
+        {
+            "note": "test"
+        },
+        {
+            "note": "test2"
+        }
+    ],
+    "CHECKLISTS": [
+        {
+            "NetworkScan": [
+                {
+                    "id": "1",
+                    "result": "DONE",
+                    "notes": "notes 1"
+                },
+                {
+                    "id": "2",
+                    "result": "DONE",
+                    "notes": "notes 2"
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": "notes 3"
+                },
+                {
+                    "id": "4",
+                    "result": "DONE",
+                    "notes": "notes 4"
+                }
+            ]
+        },
+        {
+            "Http": [
+                {
+                    "id": "1",
+                    "result": "DONE",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "DONE",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": "here are some notes\r\nstill working on notes"
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "7",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "8",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "9",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "10",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "11",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "12",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "13",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "Smb": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        }
+    ]
+}

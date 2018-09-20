@@ -1,0 +1,12 @@
+Using trigger file /etc/amap/appdefs.trig ... loaded 30 triggers
+Using response file /etc/amap/appdefs.resp ... loaded 346 responses
+Using trigger file /etc/amap/appdefs.rpc ... loaded 450 triggers
+
+amap v5.4 (www.thc.org/thc-amap) started at 2018-06-28 22:51:22 - APPLICATION MAPPING mode
+
+Total amount of tasks to perform in plain connect mode: 23
+Protocol on 192.168.159.139:80/tcp (by trigger http) matches http - banner: HTTP/1.1 200 OK\r\nDate Fri, 29 Jun 2018 035129 GMT\r\nServer Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch\r\nLast-Modified Wed, 17 Mar 2010 140825 GMT\r\nETag "107f7-2d-481ffa5ca8840"\r\nAccept-Ranges bytes\r\nContent-Length 45\r\nConn
+Protocol on 192.168.159.139:80/tcp (by trigger http) matches http-apache-2 - banner: HTTP/1.1 200 OK\r\nDate Fri, 29 Jun 2018 035129 GMT\r\nServer Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch\r\nLast-Modified Wed, 17 Mar 2010 140825 GMT\r\nETag "107f7-2d-481ffa5ca8840"\r\nAccept-Ranges bytes\r\nContent-Length 45\r\nConn
+Waiting for timeout on 19 connections ...
+
+amap v5.4 finished at 2018-06-28 22:51:28

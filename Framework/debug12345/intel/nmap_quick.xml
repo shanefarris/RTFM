@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.70 scan initiated Thu Jun 28 22:47:14 2018 as: nmap -F -oX ./debug12345/intel/nmap_quick.xml 192.168.159.139 -->
+<nmaprun scanner="nmap" args="nmap -F -oX ./debug12345/intel/nmap_quick.xml 192.168.159.139" start="1530244034" startstr="Thu Jun 28 22:47:14 2018" version="7.70" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="100" services="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1530244034" endtime="1530244034"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.159.139" addrtype="ipv4"/>
+<address addr="00:0C:29:E0:38:F3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="89">
+<extrareasons reason="resets" count="89"/>
+</extraports>
+<port protocol="tcp" portid="21"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ftp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="23"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="telnet" method="table" conf="3"/></port>
+<port protocol="tcp" portid="25"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="smtp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="netbios-ssn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3306"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="mysql" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5432"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="postgresql" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8009"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ajp13" method="table" conf="3"/></port>
+</ports>
+<times srtt="45" rttvar="11" to="100000"/>
+</host>
+<runstats><finished time="1530244034" timestr="Thu Jun 28 22:47:14 2018" elapsed="0.25" summary="Nmap done at Thu Jun 28 22:47:14 2018; 1 IP address (1 host up) scanned in 0.25 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>
