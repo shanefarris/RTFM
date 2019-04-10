@@ -6,7 +6,7 @@ from libnmap.parser import NmapParser
 import Utility
 from Session import *
 import TargetHost
-import Tool
+import ToolManager
 
 class ParserBase:
     def __init__(self):
@@ -96,7 +96,7 @@ class ParserNmap(ParserBase):
     
             for host in nmap_report.hosts:
                 print(host.address)
-                session.targetHost.setIp(host.address)
+                session.setRemoteHost(host.address)
 
                 for s in host.services:
                     print("Service: {0}/{1}\t{2}\t{3}".format(s.port, s.protocol, s.state, s.service))

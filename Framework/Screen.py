@@ -4,7 +4,7 @@ import platform
 from colorama import Fore, Back, Style, init
 
 import logging
-import Tool
+import ToolManager
 import Templates
 import Checklist
 import Shells
@@ -85,31 +85,7 @@ class Screen(MenuBase):
         choice = choice.strip()
 
         if choice == 'list':
-            if platform.system() != 'Windows':
-                os.system('reset')
-                
-            if self._currentMenu == 'options':
-                self.optionsShow()
-            elif self._currentMenu == 'stageSelection':
-                self.stageShow()
-            elif self._currentMenu == 'enumerationSelection':
-                self.enumerationShow()
-            elif self._currentMenu == 'internalSelection':
-                self.internalShow()
-            elif self._currentMenu == 'exploitSelection':
-                self.exploitShow()
-            elif self._currentMenu == 'maintainSelection':
-                self.maintainShow()
-            elif self._currentMenu == 'specificToolSelection':
-                self.specificToolShow()
-            elif self._currentMenu == 'specificToolSelection2':
-                self.specificToolShow2()
-            elif self._currentMenu == 'setupSelection':
-                self.setupShow()
-            elif self._currentMenu == 'settingsSelection':
-                self.settingsShow()
-            elif self._currentMenu == 'shellsSelection':
-                self.shellsShow()
+            self.showMenu()
             return
 
         # Handle menu input
@@ -135,6 +111,14 @@ class Screen(MenuBase):
             self.settingsHandle(choice)
         elif self._currentMenu == 'shellsSelection':
             self.shellsHandle(choice)
+        elif self._currentMenu == 'attackFlowSelection':
+            self.attackFlowHandle(choice)
+        elif self._currentMenu == 'templateSelection':
+            self.templateHandle(choice)
+        elif self._currentMenu == 'workshopSelection':
+            self.workshopHandle(choice)
+        elif self._currentMenu == 'checklistSelection':
+            self.checklistHandle(choice)
         return
 
     def checkBuiltInCommands(self, choice):
@@ -172,9 +156,40 @@ class Screen(MenuBase):
             [print(f) for f in session.targetHost.getHttpFiles()]
             self.prompt()
             return True
+        elif choice == 'list notes':
+            [print(s) for s in session.targetHost.getNotes()]
+            self.prompt()
+            return True
+        elif choice == 'list processes':
+            for t, p in session.getActiveProcs().items():
+                print(str(p.pid) + ': ' + t)
+            self.prompt()
+            return True
+        elif choice.startswith('end process'):
+            pid = choice[11:]
+            session.endProcess(pid)
+            self.prompt()
+            return True
+        elif choice == 'list checklists':
+            [print(c._CategoryName) for i, c in session.checklistManager.getChecklists().items()]
+            self.prompt()
+            return True
+        elif choice.startswith('show checklist '):
+            arg = choice[15:]
+            if arg.isdigit() == True:
+                session.checklistManager.showAllChecklistByIndex(int(arg))
+            else:
+                session.checklistManager.showAllChecklist(arg)
+            self.prompt()
+            return True
         elif choice.startswith('cmd '):
             cmd = choice[4:]
             session.runCmdSimple(cmd)
+            self.prompt()
+            return True
+        elif choice.startswith('add note '):
+            note = choice[9:]
+            session.targetHost.addNotes(note)
             self.prompt()
             return True
         elif choice == 'save session':
@@ -183,11 +198,49 @@ class Screen(MenuBase):
             return True
         elif choice == 'help':
             print('* list tools\n* list attacks\n* list loot files\n* list intel files\n* list exploit files\n* ' +
-                'list target services\n* list target http\n* cmd [CMD]\n* save session')
+                'list target services\n* list target http\n* list notes\n* list processes\n* end process [PID]\n* ' +
+                'list checklists\n* show checklist [NAME] or [INDEX]\n* '
+                'cmd [CMD]\n* save session\n* add note [NOTE]')
             self.prompt()
             return True
 
         return False
+
+    def showMenu(self):
+        Utility.resetScreen()
+                
+        if self._currentMenu == 'options':
+            self.optionsShow()
+        elif self._currentMenu == 'stageSelection':
+            self.stageShow()
+        elif self._currentMenu == 'enumerationSelection':
+            self.enumerationShow()
+        elif self._currentMenu == 'internalSelection':
+            self.internalShow()
+        elif self._currentMenu == 'exploitSelection':
+            self.exploitShow()
+        elif self._currentMenu == 'maintainSelection':
+            self.maintainShow()
+        elif self._currentMenu == 'specificToolSelection':
+            self.specificToolShow()
+        elif self._currentMenu == 'specificToolSelection2':
+            self.specificToolShow2()
+        elif self._currentMenu == 'setupSelection':
+            self.setupShow()
+        elif self._currentMenu == 'settingsSelection':
+            self.settingsShow()
+        elif self._currentMenu == 'shellsSelection':
+            self.shellsShow()
+        elif self._currentMenu == 'attackFlowSelection':
+            self.attackFlowShow()
+        elif self._currentMenu == 'templateSelection':
+            self.templateShow()
+        elif self._currentMenu == 'workshopSelection':
+            self.workshopShow()
+        elif self._currentMenu == 'checklistSelection':
+            self.checklistShow()
+
+        return
 
     def optionsShow(self):
         self._currentMenu = 'options'
@@ -196,18 +249,12 @@ class Screen(MenuBase):
         arry.append('8 = Settings Menu')
         arry.append('9 = Setup Menu')
         arry.append('')
-        arry.append(self.TITLE + 'Attach Flow:')
-        arry.append('10 = Remote Enumeration   11 = Local Enumeration   12 = Exploit ')
-        arry.append('13 = Maintain Control     14 = Specific Tools')
-        arry.append('')
-        arry.append(self.TITLE + 'Templates:')
-        arry.append('20 = Standard Attack, 21 = HTTP Attack, 22 = Windows, 23 = Linux')
-        arry.append('')
-        arry.append(self.TITLE + 'Workshop:')
-        arry.append('40 = Wordlist Creator\t41 = Reverse Shells\t42 = Rainbow Table Generator')
-        arry.append('')
-        arry.append(self.TITLE + 'Checklist/Run-throughs:')
-        arry.append('50 = Network Scan\t51 = HTTP')
+        arry.append('10 = Attach Flow')
+        arry.append('11 = Templates')
+        arry.append('12 = Workshop')
+        arry.append('13 = Checklist/Run-throughs')
+        arry.append('14 = Specific Tools')
+        
         arry.append('')
         
         self.printMenu(arry)
@@ -220,36 +267,15 @@ class Screen(MenuBase):
         elif choice == '9':
             self.setupShow()
         elif choice == '10':
-            self.enumerationShow()
+            self.attackFlowShow()
         elif choice == '11':
-            self.internalShow()
+            self.templateShow()
         elif choice == '12':
-            self.exploitShow()
+            self.workshopShow()
         elif choice == '13':
-            self.maintainShow()
+            self.checklistShow()
         elif choice == '14':
             self.specificToolShow()
-        elif choice == '20':
-            Templates.Templates().runStandard()
-        elif choice == '21':
-            Templates.Templates().runHttp()
-        elif choice == '22':
-            Templates.Templates().runWindows()
-        elif choice == '23':
-            Templates.Templates().runLinux()
-        elif choice == '40':
-            self.prompt('NOT DONE')
-        elif choice == '41':
-            self.shellsShow()
-        elif choice == '42':
-            self.prompt('NOT DONE (rtgen – Generate rainbow tables)')
-            self.prompt()
-        elif choice == '50':
-            session.checklistManager.run('NetworkScan')
-            self.prompt()
-        elif choice == '51':
-            session.checklistManager.run('Http')
-            self.prompt()
         else:
             self.prompt('Try again')
 
@@ -351,7 +377,7 @@ class Screen(MenuBase):
         self._currentMenu = 'specificToolSelection'
 
         arry = []
-        for category in Tool.ToolCategory:
+        for category in ToolManager.ToolCategory:
             arry.append(str(category.value) + ' = ' + str(category.name))
 
         self.printMenu(arry)
@@ -474,7 +500,9 @@ class Screen(MenuBase):
         arry.append('11 ' + self.SETTING + 'RHOST=' + self.ENDC + session.getRemoteHost())
         arry.append('12 ' + self.SETTING + 'RPORT=' + self.ENDC + session.getRemotePort())
         arry.append('13 ' + self.SETTING + 'Threads=' + self.ENDC + session.getThreads())
-        arry.append('14 ' + self.SETTING + 'USE_SDKS=' + self.ENDC + str(session.USE_SDKS))
+        arry.append('14 ' + self.SETTING + 'use_sdks=' + self.ENDC + str(session.USE_SDKS))
+        arry.append('15 ' + self.SETTING + 'output_tty=' + self.ENDC + str(session.getOutputTty()))
+        arry.append('16 ' + self.SETTING + 'auto_screenshot=' + self.ENDC + str(session.getAutoScreenShot()))
         arry.append('')
         arry.append('100 ' + self.SETTING + 'Default Wordlist=' + self.ENDC + os.path.basename(session.getWordlist()))
         arry.append('101 ' + self.SETTING + 'HTTP Wordlist=' + self.ENDC + os.path.basename(session.getHttpWordlist()))
@@ -515,18 +543,36 @@ class Screen(MenuBase):
                 session.USE_SDKS = True
             else:
                 session.USE_SDKS = False
-
-        elif choice == '10':
+        elif choice.startswith('output_tty='):
+            session.setOutputTty(choice.replace('output_tty=', '').replace(' ', ''))
+        elif choice.startswith('auto_screenshot='):
+            temp = choice.replace('auto_screenshot=', '').replace(' ', '')
+            if temp.lower() == 'true':
+                session.setAutoScreenShot(True)
+            else:
+                session.setAutoScreenShot(False)
+        elif choice.startswith('10'):
             session.load(choice[2:].strip())
-        elif choice == '11':
+        elif choice.startswith('11'):
             session.setRemoteHost(choice[2:].strip())
-        elif choice == '12':
+        elif choice.startswith('12'):
             session.setRemotePort(choice[2:].strip())
-        elif choice == '13':
+        elif choice.startswith('13'):
             session.setThreads(choice[2:].strip())
-        elif choice == '14':
-            session.setThreads(choice[2:].strip())
-
+        elif choice.startswith('14'):
+            temp = choice[2:].strip()
+            if temp.lower() == 'true':
+                session.USE_SDKS = True
+            else:
+                session.USE_SDKS = False
+        elif choice.startswith('15'):
+            session.setOutputTty(choice[2:].strip())
+        elif choice.startswith('16'):
+            temp = choice[2:].strip()
+            if temp.lower() == 'true':
+                session.setAutoScreenShot(True)
+            else:
+                session.setAutoScreenShot(False)
         elif choice.startswith('100'):
             session.setWordlist(choice[3:].strip())
         elif choice.startswith('101'):
@@ -535,7 +581,6 @@ class Screen(MenuBase):
             session.setDbWordlist(choice[3:].strip())
         elif choice.startswith('103'):
             session.setUserlist(choice[3:].strip())            
-        
         else:
             self.prompt('Try again')
 
@@ -554,4 +599,100 @@ class Screen(MenuBase):
         else:
             self.prompt('Try again')  
         return
+
+    def attackFlowShow(self):
+        self._currentMenu = 'attackFlowSelection'
+
+        arry = []       
+        arry.append(self.TITLE + 'Attach Flow:')
+        arry.append('1 = Remote Enumeration')
+        arry.append('2 = Local Enumeration')
+        arry.append('3 = Exploit ')
+        arry.append('4 = Maintain Control')
+
+        self.printMenu(arry)
+
+    def attackFlowHandle(self, choice):
+        c = choice
+        if choice == '1':
+            self.enumerationShow()
+        elif choice == '2':
+            self.internalShow()
+        elif choice == '3':
+            self.exploitShow()
+        elif choice == '4':
+            self.maintainShow()
+
+    def templateShow(self):
+        self._currentMenu = 'templateSelection'
+
+        arry = []       
+        arry.append(self.TITLE + 'Templates:')
+        arry.append('1 = Standard Attack')
+        arry.append('2 = HTTP Attack')
+        arry.append('3 = Windows ')
+        arry.append('4 = Linux')
+
+        self.printMenu(arry)
+
+    def templateHandle(self, choice):
+        c = choice
+        if choice == '1':
+            Templates.Templates().runStandard()
+        elif choice == '2':
+            Templates.Templates().runHttp()
+        elif choice == '3':
+            Templates.Templates().runWindows()
+        elif choice == '4':
+            Templates.Templates().runLinux()
+        return
+
+    def workshopShow(self):
+        self._currentMenu = 'workshopSelection'
+
+        arry = []       
+        arry.append(self.TITLE + 'Workshop:')
+        arry.append('1 = Wordlist Creator')
+        arry.append('2 = Reverse Shells')
+        arry.append('3 = Rainbow Table Generator')
+
+        self.printMenu(arry)
+        return
+
+    def workshopHandle(self, choice):
+        c = choice
+        if choice == '1':
+            self.prompt('NOT DONE')
+        elif choice == '2':
+            self.shellsShow()
+        elif choice == '3':
+            self.prompt('NOT DONE (rtgen – Generate rainbow tables)')
+            self.prompt()
+        return
+
+    def checklistShow(self):
+        self._currentMenu = 'checklistSelection'
+
+        arry = []       
+        arry.append(self.TITLE + 'Checklists and Notes:')
+
+        for i, item in session.checklistManager.getChecklists().items():
+            arry.append(str(i) + ' = ' + item._CategoryName)
+
+        self.printMenu(arry)
+        return
+
+    def checklistHandle(self, choice):
+        if choice.isnumeric() == True:
+            index = int(choice)
+            item = session.checklistManager.getChecklists().get(index)
+            if item == None:
+                print('Could not find list.')
+                return 
+
+            print(item._CategoryName)
+            session.checklistManager.run(item._CategoryName)
+            self.checklistShow()
+        return
+
             

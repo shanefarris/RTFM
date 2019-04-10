@@ -3,7 +3,7 @@ from colorama import Fore, Back, Style, init
 
 class MenuBase:
     def __init__(self):
-        init()
+        init(convert=True)
 
     '''
     pip install colorama
@@ -31,6 +31,8 @@ class MenuBase:
     MSG = '\033[94m'
     TITLE = '\033[92m'
     SETTING = Fore.MAGENTA + Style.BRIGHT
+    STEPS = Fore.CYAN + Style.BRIGHT
+    CODE = Fore.GREEN + Style.DIM
     WARNING = '\033[93m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'

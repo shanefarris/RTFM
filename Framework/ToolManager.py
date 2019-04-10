@@ -4,11 +4,151 @@ import logging
 from enum import Enum, unique
 from collections import defaultdict
 
+# from Session import * # I miss C++
+import Session
 from MenuBase import *
-from Tool import Tool
-from Tool import ToolCategory
-from CustomTools import *
-from NmapScripts import *
+
+@unique
+class ToolCategory(Enum):
+    Enumeration = 1
+    VulnerabilityScanner = 2
+    Exploit = 3
+    Web = 4
+    StressTest = 5
+    Forensics = 6
+    Wireless = 7
+    SniffingSpoofing = 8
+    Password = 9
+    Maintaining = 10
+    ReverseEng = 11
+    Reporting = 12
+    Hardware = 13
+
+class Tool:
+    def __init__(self, name, category, desc, example, cmd, args, parserName):
+        self._name = name
+        self._category = category
+        self._desc = desc
+        self._example = example
+        self._cmd = cmd
+        self._args = args
+        self._parserName = parserName
+        self._arguments = []    # TODO: Use this to replace string _args
+
+    def __repr__(self):
+        return 'Tool'
+
+    def __str__(self):
+        return 'Name: ' + str(self._name) + '\ncategory: ' + str(self._category) + '\nDescription: ' + str(self._desc) + \
+            '\nExample: ' + str(self._example) + '\nCmd: ' + str(self._cmd) + '\nArgs: ' + str(self._args) + \
+            '\nParser: ' + str(self._parserName)
+
+    def compileCmd(self):
+        cmdTemplate = self._cmd
+
+        # Check for custom arguments
+        arry = self.promptForArg()
+        if arry != None:
+            count = 1
+            for arg in arry:
+                argStr = '${arg' + str(count) + '}'
+                self._cmd = self._cmd.replace(argStr, arg)
+                count += 1
+
+        # Look for standard arguments
+        self._cmd = self._cmd.replace('${target}', Session.session.getRemoteHost())
+        self._cmd = self._cmd.replace('${working_dir}', Session.session.getWorkingDir())
+        self._cmd = self._cmd.replace('${pass_file}', Session.session.getWordlist())
+        self._cmd = self._cmd.replace('${user_file}', Session.session.getUserlist())
+
+        # Port might need to promp for input if value is 'ALL'
+        standardArg = ['${interface}', '${target_mac}', '${gateway}']
+        if '${port}' in self._cmd and Session.session.getRemotePort() == 'ALL':
+            standardArg.append('${port}')
+        else:
+            self._cmd = self._cmd.replace('${port}', Session.session.getRemotePort())
+
+        # Prompt for the other standard arguments
+        for arg in standardArg:
+            if arg in self._cmd:
+                prompt = arg.replace('${', '').replace('}', ': ')
+                print(prompt, end = '')
+                choice = input()
+                self._cmd = self._cmd.replace(arg, choice)
+
+        ret = self._cmd             # Save our results
+        self._cmd = cmdTemplate     # Reset our template
+        return ret
+
+    def compileOutfile(self):
+        dir = self.getOutputFileName()
+        outFile = ' | tee ' + dir
+        return outFile
+
+    def run(self, threaded = True, quiet = False, customOutfile = False, onComplete = None):
+        # Show example, could be helpful if populating arguments
+        print(self._example)
+
+        cmd = self.compileCmd()
+        
+        if customOutfile == True:
+            outFile = ''
+        else:
+            outFile = self.compileOutfile()
+
+        if threaded == True:
+            Session.session.runThreadedCmd(cmd + outFile, self._name, onComplete = onComplete)
+        else:
+            Session.session.runCmd(cmd + outFile, self._name, onComplete = onComplete)
+
+        return outFile
+
+    def promptForArg(self):
+        # Looks for and fills in custom arguments
+        if self._args == None or self._args == '':
+            return None
+
+        arry = []
+        count = 1
+        for prompt in self._args.split(','):
+            # parse arg number and prompt string
+            argStr = '${arg' + str(count) + '}'
+            prompt = prompt.replace(argStr, '')
+            prompt = prompt.replace(',', '')
+            prompt = prompt.replace('=', ': ')
+            
+            # Search for default values
+            default = ''
+            if prompt.find('(') > -1 and prompt.find(')'):
+                start = prompt.find('(') + 1
+                end = prompt.find(')')
+                default = prompt[start:end]
+                
+            # Prompt the user
+            print(prompt, end = '')
+            userInput = input()
+            if userInput == '':
+                userInput = default
+            arry.append(userInput)
+            count += 1
+
+        return arry
+
+    def getOutputFileName(self):
+        dir = Session.session.getWorkingDir()
+        
+        if self._category == str(ToolCategory.Enumeration.value) or \
+            self._category == str(ToolCategory.SniffingSpoofing.value) or \
+            self._category == str(ToolCategory.Web.value) or \
+            self._category == str(ToolCategory.VulnerabilityScanner.value):
+            dir = Session.session.getIntelDir()
+        elif self._category == str(ToolCategory.Exploit.value):
+            dir = Session.session.getExploitDir()
+        elif self._category == str(ToolCategory.Reporting.value):
+            dir = Session.session.getReportDir()
+
+        outFile = dir + '/' + self._name + '.out'
+        return outFile
 
 class ToolManager(MenuBase):
     def __init__(self):
@@ -44,71 +184,97 @@ class ToolManager(MenuBase):
                 logging.exception(type(e))
 
         # Add custom tools
-        self.addTool(NmapStealth(), ToolCategory.Enumeration)
-        self.addTool(NmapAcars(), ToolCategory.Enumeration)
-        self.addTool(NmapAfp(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapAjp(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapAllseeingeye(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapAmqp(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapIdentd(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapBackorifice(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapBACNet(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapBitcoin(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapBittorrent(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapBjnp(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapDiscoverScripts(), ToolCategory.Enumeration)
-        self.addTool(NmapEigrp(), ToolCategory.Enumeration)
-        self.addTool(NmapCccam(), ToolCategory.Enumeration)
-        self.addTool(NmapCics(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapCitrixWeb(), ToolCategory.Enumeration)
-        self.addTool(NmapCitrixIca(), ToolCategory.Enumeration)        
-        self.addTool(NmapClam(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapCoap(), ToolCategory.Enumeration)
-        self.addTool(NmapCouchDb(), ToolCategory.Enumeration)
-        self.addTool(NmapCredSummary(), ToolCategory.Reporting)
-        self.addTool(NmapCups(), ToolCategory.Enumeration)
-        self.addTool(NmapCvs(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapDb2(), ToolCategory.Enumeration)
-        self.addTool(NmapDelugeRpc(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapDhcp(), ToolCategory.Enumeration)
-        self.addTool(NmapDistccd(), ToolCategory.Exploit)
-        self.addTool(NmapDnsEnum(), ToolCategory.Enumeration)
-        self.addTool(NmapDnsVul(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapDocker(), ToolCategory.Enumeration)
-        self.addTool(NmapDominoUsers(), ToolCategory.Exploit)
-        self.addTool(NmapDominoConsole(), ToolCategory.Exploit)
-        self.addTool(NmapIphoto(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapDrda(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapMultihomed(), ToolCategory.Enumeration)
-        self.addTool(NmapEnip(), ToolCategory.Enumeration)
-        self.addTool(NmapFinger(), ToolCategory.Enumeration)
-        self.addTool(NmapFirewalk(), ToolCategory.Enumeration)
-        self.addTool(NmapFirewall(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapFume(), ToolCategory.Enumeration)
-        self.addTool(NmapFox(), ToolCategory.Enumeration)
-        self.addTool(NmapFreelancer(), ToolCategory.Enumeration)
-        self.addTool(NmapFtp(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapHddTemp(), ToolCategory.Enumeration)
-        self.addTool(NmapHnap(), ToolCategory.Enumeration)
-        self.addTool(NmapHttpAnalytics(), ToolCategory.Forensics)
-        self.addTool(NmapHttpEnum(), ToolCategory.Enumeration)
-        self.addTool(NmapHttpExploit(), ToolCategory.Exploit)
-        self.addTool(NmapHttpVul(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapVlcStreamer(), ToolCategory.Enumeration)
-        self.addTool(NmapVmware(), ToolCategory.VulnerabilityScanner)
-        self.addTool(NmapMsSqlBrute(), ToolCategory.VulnerabilityScanner)
+        import CustomTools
+        import NmapScripts
+        
+        self.addTool(NmapScripts.NmapLoudTcp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapLoudUdp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapStandardTcp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapStandardUdp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapSneaky(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapPing(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapVersion(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapQuick(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapStealth(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapAcars(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapAfp(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapAjp(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapAllseeingeye(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapAmqp(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapIdentd(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapBackorifice(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapBACNet(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapBitcoin(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapBittorrent(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapBjnp(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapDiscoverScripts(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapEigrp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapCassandra(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapCccam(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapCics(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapCitrixWeb(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapCitrixIca(), ToolCategory.Enumeration)        
+        self.addTool(NmapScripts.NmapClam(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapCoap(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapCouchDb(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapCredSummary(), ToolCategory.Reporting)
+        self.addTool(NmapScripts.NmapCups(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapCvs(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapDb2(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapDelugeRpc(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapDhcp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapDistccd(), ToolCategory.Exploit)
+        self.addTool(NmapScripts.NmapDnsEnum(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapDnsVul(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapDocker(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapDominoUsers(), ToolCategory.Exploit)
+        self.addTool(NmapScripts.NmapDominoConsole(), ToolCategory.Exploit)
+        self.addTool(NmapScripts.NmapIphoto(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapDrda(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapMultihomed(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapEnip(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapFinger(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapFirewalk(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapFirewall(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapFume(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapFox(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapFreelancer(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapFtp(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapHddTemp(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapHnap(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapHttpAnalytics(), ToolCategory.Forensics)
+        self.addTool(NmapScripts.NmapHttpEnum(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapHttpExploit(), ToolCategory.Exploit)
+        self.addTool(NmapScripts.NmapHttpVul(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapImapEnum(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapImapBrute(), ToolCategory.Password)
+        self.addTool(NmapScripts.NmapVlcStreamer(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapVmware(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapMsSqlBrute(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapMySqlEnum(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapMySqlBrute(), ToolCategory.Password)
+        self.addTool(NmapScripts.NmapSmbEnum(), ToolCategory.Enumeration)
+        self.addTool(NmapScripts.NmapSmbVuln(), ToolCategory.VulnerabilityScanner)
+        self.addTool(NmapScripts.NmapSmbBrute(), ToolCategory.Password)
+        self.addTool(NmapScripts.NmapSnmpBrute(), ToolCategory.Password)
+
+        self.addTool(CustomTools.SmtpUserVerify(), ToolCategory.Enumeration)
         
         if platform.system() == 'Windows':
-            pass
+            self.addTool(CustomTools.DownloadFileWindows(), ToolCategory.Maintaining)
         else:
-            self.addTool(CustomWordlist(), ToolCategory.Password)
-            self.addTool(BruteSopSingleServer(), ToolCategory.Password)
-            self.addTool(BruteSopMultiServer(), ToolCategory.Password)
-            self.addTool(CiscoGlobalExploiter(), ToolCategory.VulnerabilityScanner)
-            self.addTool(OpenVAS(), ToolCategory.VulnerabilityScanner)
-            self.addTool(SearchsploitNmap(), ToolCategory.Exploit)
-            self.addTool(SearchsploitTargetHost(), ToolCategory.Exploit)
-            self.addTool(SearchsploitCustomSearch(), ToolCategory.Exploit)
+            self.addTool(CustomTools.CustomWordlist(), ToolCategory.Password)
+            self.addTool(CustomTools.HydraCustom(), ToolCategory.Password)
+            self.addTool(CustomTools.BruteSopMultiServer(), ToolCategory.Password)
+            self.addTool(CustomTools.CiscoGlobalExploiter(), ToolCategory.VulnerabilityScanner)
+            self.addTool(CustomTools.OpenVAS(), ToolCategory.VulnerabilityScanner)
+            self.addTool(CustomTools.SearchsploitNmap(), ToolCategory.Exploit)
+            self.addTool(CustomTools.SearchsploitTargetHost(), ToolCategory.Exploit)
+            self.addTool(CustomTools.SearchsploitCustomSearch(), ToolCategory.Exploit)
+            self.addTool(CustomTools.DownloadFileLinux(), ToolCategory.Maintaining)
+            self.addTool(CustomTools.SQLMapCustom(), ToolCategory.Web)
+
+        return
 
     def __repr__(self):
         return 'ToolManager'
@@ -193,19 +359,19 @@ class ToolManager(MenuBase):
 
         self.prompt()
      
-    def run(self, index, toolCategory, **kwargs):
+    def run(self, index, toolCategory, threaded = True, quiet = False, customOutfile = False, onComplete = None):
         tool = self.getTool(index, toolCategory)
         
         outputFile = ''
         if tool == None:
             self.prompt('Unable to find tool')
         else:
-            outputFile = tool.run(**kwargs)
+            outputFile = tool.run(threaded = threaded, quiet = quiet, customOutfile = customOutfile, onComplete = onComplete)
             self.prompt()
 
         return outputFile
 
-    def runByName(self, name, toolCategory, **kwargs):
+    def runByName(self, name, toolCategory, threaded = True, quiet = False, customOutfile = False, onComplete = None):
         index = self.findToolIndex(name, toolCategory)
 
         tool = self.getTool(index, toolCategory)
@@ -214,38 +380,16 @@ class ToolManager(MenuBase):
         if tool == None:
             self.prompt('Unable to find tool')
         else:
-            outputFile = tool.run(**kwargs)
+            outputFile = tool.run(threaded = threaded, quiet = quiet, customOutfile = customOutfile, onComplete = onComplete)
             self.prompt()
 
         return outputFile
         
-'''
-if ToolCategory.Enumeration == toolCategory:
-    pass
-elif ToolCategory.VulnerabilityScanner == toolCategory:
-    pass
-elif ToolCategory.Exploit == toolCategory:
-    pass
-elif ToolCategory.Web == toolCategory:
-    pass
-elif ToolCategory.StressTest == toolCategory:
-    pass
-elif ToolCategory.Forensics == toolCategory:
-    pass
-elif ToolCategory.Wireless == toolCategory:
-    pass
-elif ToolCategory.SniffingSpoofing == toolCategory:
-    pass
-elif ToolCategory.Password == toolCategory:
-    pass
-elif ToolCategory.Maintaining == toolCategory:
-    pass
-elif ToolCategory.ReverseEng == toolCategory:
-    pass
-elif ToolCategory.Reporting == toolCategory:
-    pass
-elif ToolCategory.Hardware == toolCategory:
-    pass
-'''
-
-
+class Argument:
+    def __init__(self, option, description, value = '', delim = '=', isBool = False):
+        self._option = option
+        self._description = description
+        self._value = value
+        self._delim = delim
+        self._isBool = isBool
+        return

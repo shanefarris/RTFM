@@ -180,15 +180,6 @@
     "parser": null
   },
   {
-    "name": "DotDotPwn",
-    "desc": "It’s a very flexible intelligent fuzzer to discover traversal directory vulnerabilities in software such as HTTP/FTP/TFTP servers, Web platforms such as CMSs, ERPs, Blogs, etc.\r\nAlso, it has a protocol-independent module to send the desired payload to the host and port specified. On the other hand, it also could be used in a scripting way using the STDOUT module.",
-    "example": "Use the HTTP scan module (-m http) against a host (-h 192.168.1.1) , using the GET method (-M GET):\r\ndotdotpwn.pl -m http -h 192.168.1.1 -M GET",
-    "category": "1",
-    "customInput": null,
-    "cmd": "dotdotpwn.pl -m http -h ${target} -M GET",
-    "parser": null
-  },
-  {
     "name": "enumIAX",
     "desc": "enumIAX is an Inter Asterisk Exchange protocol username brute-force enumerator. enumIAX may operate in two distinct modes; Sequential Username Guessing or Dictionary Attack.",
     "example": "Run a dictionary attack (-d /usr/share/wordlists/metasploit/unix_users.txt) against the target host (192.168.1.1):\r\nenumiax -d /usr/share/wordlists/metasploit/unix_users.txt 192.168.1.1",
@@ -1867,8 +1858,8 @@
     "desc": "CeWL is a ruby app which spiders a given url to a specified depth, optionally following external links, and returns a list of words which can then be used for password crackers such as John the Ripper.\r\n\r\nCeWL also has an associated command line app, FAB (Files Already Bagged) which uses the same meta data extraction techniques to create author/creator lists from already downloaded.",
     "example": "Scan to a depth of 2 (-d 2) and use a minimum word length of 5 (-m 5), save the words to a file (-w docswords.txt), targeting the given URL (http://docs.kali.org):\r\ncewl -d 2 -m 5 -w docswords.txt http://docs.kali.org",
     "category": "9",
-    "customInput": "",
-    "cmd": "cewl -d 2 -m 5 -w ${working_dir}/loot/cewl_wordlist.out ${target}",
+    "customInput": "URL=${arg1},",
+    "cmd": "cewl -d 2 --with-number -e -w ${working_dir}/loot/cewl_wordlist.out ${arg1}",
     "parser": ""
   },
   {

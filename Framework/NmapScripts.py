@@ -1,14 +1,16 @@
 
+import platform
 import Session
-from Tool import Tool as Base
-from Tool import ToolCategory
+from ToolManager import *
 
 # TODO
 # http-domino-enum-passwords.nse, http-fetch.nse, http-google-malware.nse, http-grep.nse, http-open-proxy.nse, http-robtex-reverse-ip.nse, http-robtex-shared-ns.nse, http-trace.nse
-# http-vuln-cve2011-3192.nse
+# http-vuln-cve2011-3192.nse, smb-print-text, snmp-hh3c-logins, snmp-ios-config
+# Not including: iax2, icap, iec, ike, impress
 
-class NmapBase(Base):
+class NmapBase(Tool):
     def __init__(self):
+        self._xmlOut = ''
         return super().__init__(self._name, self._category, self._desc, self._example, self._cmd, self._args, self._parserName)
 
     def __repr__(self):
@@ -22,27 +24,31 @@ class NmapBase(Base):
 
     def run(self, **args):
         self._cmd = self._cmd.replace('${port}', self._port)
-        if self._category == ToolCategory.Enumeration:
-            self._cmd += ' -oX ${working_dir}/intel/' + self._name + '.xml'
-        elif self._category == ToolCategory.VulnerabilityScanner:
-            self._cmd += ' -oX ${working_dir}/intel/' + self._name + '.xml'
-        elif self._category == ToolCategory.Reporting:
-            self._cmd += ' -oX ${working_dir}/report/' + self._name + '.xml'
-        elif self._category == ToolCategory.Exploit:
-            self._cmd += ' -oX ${working_dir}/exploits/' + self._name + '.xml'
+
+        # Set this so we can part the XML into HTML on complete
+        self._xmlOut = Session.session.getIntelDir() +'/' + self._name + '.xml'
+
+        self._cmd += ' -oX ' + self._xmlOut
             
         self._category = str(self._category)
-        super().run(custom_outfile = False)
+        super().run(customOutfile = False)
         return
 
-class NmapStealth(NmapBase):
+    def onComplete(self):
+        if platform.system() != 'Windows':
+            Session.session.run('xsltproc ' + self._xmlOut + ' -o ' + Session.session.getReportDir() + '/' + self._name + '.html')
+        return
+
+# region Basic Enumeration
+
+class NmapLoudTcp(NmapBase):
     def __init__(self):
-        self._desc = 'A combination of options used to make this as stealthly as possible.  This is meant to scan a single IP, but you can probably use it for the entire network.'
-        self._name = 'NmapStealth'
+        self._desc = 'Loud TCP scan.'
+        self._name = 'NmapLoudTcp'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap ${target} --data-length 36 -f -S ${arg1} -e eth0 -T paranoid'
+        self._cmd = 'nmap -v -sT -sV -A -T4 -p1-65535 ${target} '
         self._example = self._cmd
-        self._port = '2202'
+        self._port = ''
         self._args = ''
         self._parserName = ''
         return super().__init__()
@@ -54,12 +60,190 @@ class NmapStealth(NmapBase):
         return super().__str__()
 
     def run(self, **args):
-        print('Enter an IP we want to show up as (10.0.0.1): ', end = '')
+        super().run()
+        return
+
+class NmapLoudUdp(NmapBase):
+    def __init__(self):
+        self._desc = 'Loud UDP scan.'
+        self._name = 'NmapLoudUdp'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -sU -sV -A -T4 -p1-65535 ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapStandardTcp(NmapBase):
+    def __init__(self):
+        self._desc = 'Standard TCP scan.'
+        self._name = 'NmapStandardTcp'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -p1-65535 -sT -sV -T4 ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapStandardUdp(NmapBase):
+    def __init__(self):
+        self._desc = 'Standard UDP scan.'
+        self._name = 'NmapStandardUdp'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -p1-65535 -sU -sV -T4 ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSneaky(NmapBase):
+    def __init__(self):
+        self._desc = 'Sneak/quiet scan, a step below the Stealth scan, but more realiable, and faster.'
+        self._name = 'NmapSneaky'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -p1-65535 -sS -P0 -T0 ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapPing(NmapBase):
+    def __init__(self):
+        self._desc = 'Fast ping scan.'
+        self._name = 'NmapPing'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -sP ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapVersion(NmapBase):
+    def __init__(self):
+        self._desc = 'Get OS version.'
+        self._name = 'NmapVersion'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -sV ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapQuick(NmapBase):
+    def __init__(self):
+        self._desc = 'Quick scan.'
+        self._name = 'NmapVersion'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -v -F ${target} '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+# endregion
+
+class NmapStealth(NmapBase):
+    def __init__(self):
+        self._desc = 'A combination of options used to make this as stealthly as possible.  This is meant to scan a single IP, but you can probably use it for the entire network.'
+        self._name = 'NmapStealth'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap ${target} -p1-65535 --data-length 36 -f -S ${arg1} -e eth0 -T 1 -Pn -n '
+        self._example = self._cmd
+        self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        print('Enter an IP we want to show up as. e.g 10.11.1.5: ', end = '')
         maskIp = input()
         if maskIp == None or maskIp == '':
-            maskIp = '10.0.0.1'
-
-        self._cmd = self._cmd.replace('${arg1}', maskIp)
+            self._cmd = self._cmd.replace('-S ${arg1} -e eth0 ', '')
+        else:
+            self._cmd = self._cmd.replace('${arg1}', maskIp)
 
         super().run()
         return
@@ -332,7 +516,7 @@ class NmapDiscoverScripts(NmapBase):
         return super().__str__()
 
     def run(self, **args):
-        session.runThreadedCmd('nmap -6 --script broadcast-dhcp6-discover -oX ${working_dir}/discovery_report.out', 'Nmap-broadcast-dhcp6-discover')
+        session.runThreadedCmd('nmap -6 --script broadcast-dhcp6-discover', 'Nmap-broadcast-dhcp6-discover')
         super().run()
         return
 
@@ -344,6 +528,28 @@ class NmapEigrp(NmapBase):
         self._cmd = 'nmap --script=broadcast-eigrp-discovery ${target}'
         self._example = self._cmd
         self._port = ''
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapCassandra(NmapBase):
+    def __init__(self):
+        self._desc = 'Attempts to get basic info and server status from a Cassandra database.  Performs brute force password auditing against the Cassandra database.'
+        self._name = 'NmapCassandra'
+        self._category = ToolCategory.VulnerabilityScanner
+        self._cmd = 'nmap --script=cassandra-info,cassandra-brute -p ${port} ${target}'
+        self._example = self._cmd
+        self._port = '9160'
         self._args = ''
         self._parserName = ''
         return super().__init__()
@@ -385,7 +591,7 @@ class NmapCics(NmapBase):
         self._desc = 'CICS transaction ID enumerator for IBM mainframes.'
         self._name = 'NmapCics'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap --script=cics-enum,script=cics-info,cics-user-brute,cics-user-enum -p ${port} ${target} -oX ${working_dir}/cics_report.out'
+        self._cmd = 'nmap --script=cics-enum,script=cics-info,cics-user-brute,cics-user-enum -p ${port} ${target}'
         self._example = self._cmd
         self._port = '23'
         self._args = ''
@@ -407,7 +613,7 @@ class NmapCitrixWeb(NmapBase):
         self._desc = 'Citrix PN Web Agent.'
         self._name = 'NmapCitrixWeb'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap --script=citrix-enum-apps-xml,citrix-enum-servers-xml -p ${port} ${target} -oX ${working_dir}/citrix_web_report.out'
+        self._cmd = 'nmap --script=citrix-enum-apps-xml,citrix-enum-servers-xml -p ${port} ${target}'
         self._example = self._cmd
         self._port = '80,443,8080'
         self._args = ''
@@ -429,7 +635,7 @@ class NmapCitrixIca(NmapBase):
         self._desc = 'Citrix ICA Agent.'
         self._name = 'NmapCitrixIca'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap --script=citrix-enum-servers,citrix-enum-apps -p ${port} ${target} -oX ${working_dir}/citrix_ica_report.out'
+        self._cmd = 'nmap --script=citrix-enum-servers,citrix-enum-apps -p ${port} ${target}'
         self._example = self._cmd
         self._port = '1604'
         self._args = ''
@@ -451,7 +657,7 @@ class NmapClam(NmapBase):
         self._desc = 'Clam AV server.'
         self._name = 'NmapClam'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -sV --script=clamav-exec ${target} -oX ${working_dir}/clam_av_report.out'
+        self._cmd = 'nmap -sV --script=clamav-exec ${target}'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -473,7 +679,7 @@ class NmapCoap(NmapBase):
         self._desc = 'Dumps list of available resources from CoAP endpoints.'
         self._name = 'NmapCoap'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p U:${port} -sU --script=coap-resources ${target} -oX ${working_dir}/coap_report.out'
+        self._cmd = 'nmap -p U:${port} -sU --script=coap-resources ${target}'
         self._example = self._cmd
         self._port = '5683'
         self._args = ''
@@ -495,7 +701,7 @@ class NmapCouchDb(NmapBase):
         self._desc = 'Couch DB.'
         self._name = 'NmapCouchDb'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} --script=couchdb-databases,couchdb-stats ${target} -oX ${working_dir}/couchdb_report.out'
+        self._cmd = 'nmap -p ${port} --script=couchdb-databases,couchdb-stats ${target}'
         self._example = self._cmd
         self._port = '5984'
         self._args = ''
@@ -517,7 +723,7 @@ class NmapCredSummary(NmapBase):
         self._desc = 'Lists all discovered credentials.'
         self._name = 'NmapCredSummary'
         self._category = ToolCategory.Reporting
-        self._cmd = 'nmap --script=creds-summary ${target} -oX ${working_dir}/cred_summary_report.out'
+        self._cmd = 'nmap --script=creds-summary ${target}'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -539,7 +745,7 @@ class NmapCups(NmapBase):
         self._desc = 'Lists printers managed by the CUPS printing service. Lists currently queued print jobs of the remote CUPS service grouped by printer.'
         self._name = 'NmapCups'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} --script=cups-info,cups-queue-info ${target} -oX ${working_dir}/cups_report.out'
+        self._cmd = 'nmap -p ${port} --script=cups-info,cups-queue-info ${target}'
         self._example = self._cmd
         self._port = '631'
         self._args = ''
@@ -561,7 +767,7 @@ class NmapCvs(NmapBase):
         self._desc = 'CVS server.'
         self._name = 'NmapCvs'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} --script=cvs-brute-repository,cvs-brute ${target} -oX ${working_dir}/cvs_report.out'
+        self._cmd = 'nmap -p ${port} --script=cvs-brute-repository,cvs-brute ${target}'
         self._example = self._cmd
         self._port = '2401'
         self._args = ''
@@ -583,7 +789,7 @@ class NmapDb2(NmapBase):
         self._desc = 'IBM DB2 server.'
         self._name = 'NmapDb2'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap --script=db2-das-info ${target} -oX ${working_dir}/db2_report.out'
+        self._cmd = 'nmap --script=db2-das-info ${target}'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -605,7 +811,7 @@ class NmapDelugeRpc(NmapBase):
         self._desc = 'Performs brute force password auditing against the DelugeRPC daemon.'
         self._name = 'NmapDelugeRpc'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} --script=deluge-rpc-brute ${target} -oX ${working_dir}/deluge_report.out'
+        self._cmd = 'nmap -p ${port} --script=deluge-rpc-brute ${target}'
         self._example = self._cmd
         self._port = '58846'
         self._args = ''
@@ -627,7 +833,7 @@ class NmapDhcp(NmapBase):
         self._desc = 'Sends a DHCPINFORM request to a host on UDP port 67 to obtain all the local configuration parameters without allocating a new address.'
         self._name = 'NmapDhcp'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -sU -p ${port} --script=dhcp-discover ${target} -oX ${working_dir}/dhcp_report.out'
+        self._cmd = 'nmap -sU -p ${port} --script=dhcp-discover ${target}'
         self._example = self._cmd
         self._port = '67'
         self._args = ''
@@ -650,7 +856,7 @@ class NmapDistccd(NmapBase):
                      'present in modern implementation due to poor configuration of the service.'
         self._name = 'NmapDistccd'
         self._category = ToolCategory.Exploit
-        self._cmd = 'nmap -p ${port} ${target} --script distcc-exec --script-args="distcc-exec.cmd=\'id\'" -oX ${working_dir}/distccd_report.out'
+        self._cmd = 'nmap -p ${port} ${target} --script distcc-exec --script-args="distcc-exec.cmd=\'id\'"'
         self._example = self._cmd
         self._port = '3632'
         self._args = ''
@@ -672,7 +878,7 @@ class NmapDnsEnum(NmapBase):
         self._desc = 'DNS enumeration.'
         self._name = 'NmapDnsEnum'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} -sn ${target} --script=dns-blacklist,dns-nsid,dns-recursion,dns-service-discovery -oX ${working_dir}/dns_enum_report.out'
+        self._cmd = 'nmap -p ${port} -sn ${target} --script=dns-blacklist,dns-nsid,dns-recursion,dns-service-discovery'
         self._example = self._cmd
         self._port = '53'
         self._args = ''
@@ -694,7 +900,7 @@ class NmapDnsVul(NmapBase):
         self._desc = 'DNS vulnerability scanning.'
         self._name = 'NmapDnsVul'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} -sU ${target} --script=dns-fuzz,dns-brute,dns-random-srcport,script=dns-random-txid -oX ${working_dir}/dns_vul_report.out'
+        self._cmd = 'nmap -p ${port} -sU ${target} --script=dns-fuzz,dns-brute,dns-random-srcport,dns-random-txid'
         self._example = self._cmd
         self._port = '53'
         self._args = ''
@@ -716,7 +922,7 @@ class NmapDocker(NmapBase):
         self._desc = 'Docker enum.'
         self._name = 'NmapDocker'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap ${target} --script=docker-version -oX ${working_dir}/docker_report.out'
+        self._cmd = 'nmap ${target} --script=docker-version'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -739,7 +945,7 @@ class NmapDominoUsers(NmapBase):
         self._desc = 'Attempts to discover valid IBM Lotus Domino users and download their ID files by exploiting the CVE-2006-5835 vulnerability.'
         self._name = 'NmapDominoUsers'
         self._category = ToolCategory.Exploit
-        self._cmd = 'nmap -p ${port} ${target} --script=domino-enum-users -oX ${working_dir}/domino_user_report.out'
+        self._cmd = 'nmap -p ${port} ${target} --script=domino-enum-users'
         self._example = self._cmd
         self._port = '1352'
         self._args = ''
@@ -762,31 +968,9 @@ class NmapDominoConsole(NmapBase):
                      'Performs brute force password auditing against the Lotus Domino Console.'
         self._name = 'NmapDominoUsers'
         self._category = ToolCategory.Exploit
-        self._cmd = 'nmap -p ${port} ${target} --script=domcon-brute,domcon-cmd --script-args domcon-cmd.cmd="show server" -oX ${working_dir}/domino_console_report.out'
+        self._cmd = 'nmap -p ${port} ${target} --script=domcon-brute,domcon-cmd --script-args domcon-cmd.cmd="show server"'
         self._example = self._cmd
         self._port = '2050'
-        self._args = ''
-        self._parserName = ''
-        return super().__init__()
-
-    def __repr__(self):
-        return super().__repr__()
-
-    def __str__(self):
-        return super().__str__()
-
-    def run(self, **args):
-        super().run()
-        return
-
-class NmapIphoto(NmapBase):
-    def __init__(self):
-        self._desc = 'Performs brute force password auditing against an iPhoto Library.'
-        self._name = 'NmapIphoto'
-        self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} ${target} --script=dpap-brute -oX ${working_dir}/iphoto_console_report.out'
-        self._example = self._cmd
-        self._port = '8770'
         self._args = ''
         self._parserName = ''
         return super().__init__()
@@ -807,7 +991,7 @@ class NmapDrda(NmapBase):
                      'Performs password guessing against databases supporting the IBM DB2 protocol such as Informix, DB2 and Derby.'
         self._name = 'NmapDrda'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} ${target} --script=drda-info,drda-brute -oX ${working_dir}/drda_report.out'
+        self._cmd = 'nmap -p ${port} ${target} --script=drda-info,drda-brute'
         self._example = self._cmd
         self._port = '50000'
         self._args = ''
@@ -830,7 +1014,7 @@ class NmapMultihomed(NmapBase):
                      'currently includes, SSL certificates, SSH host keys, MAC addresses, and Netbios server names.'
         self._name = 'NmapMultihomed'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -PN -p445,443 --script=duplicates,nbstat,ssl-cert -oX ${working_dir}/multihomed_report.out'
+        self._cmd = 'nmap -PN -p445,443 --script=duplicates,nbstat,ssl-cert'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -852,7 +1036,7 @@ class NmapEnip(NmapBase):
         self._desc = 'This NSE script is used to send a EtherNet/IP packet to a remote device that has TCP 44818 open.'
         self._name = 'NmapEnip'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -sU  -p 44818 --script=enip-info ${target} -oX ${working_dir}/enip_report.out'
+        self._cmd = 'nmap -sU  -p 44818 --script=enip-info ${target}'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -874,7 +1058,7 @@ class NmapFinger(NmapBase):
         self._desc = 'Attempts to retrieve a list of usernames using the finger service.'
         self._name = 'NmapFinger'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap --script=finger,fingerprint-strings ${target} -oX ${working_dir}/finger_report.out'
+        self._cmd = 'nmap --script=finger,fingerprint-strings ${target}'
         self._example = self._cmd
         self._port = '79'
         self._args = ''
@@ -896,7 +1080,7 @@ class NmapFirewalk(NmapBase):
         self._desc = 'Firewalk that bitch.'
         self._name = 'NmapFirewalk'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap --script=firewalk --traceroute ${target} -oX ${working_dir}/firewalk_report.out'
+        self._cmd = 'nmap --script=firewalk --traceroute ${target}'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -918,7 +1102,7 @@ class NmapFirewall(NmapBase):
         self._desc = 'Other firewall stuff (be sure to firewalk it).'
         self._name = 'NmapFirewall'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap --script=firewall-bypass ${target} -oX ${working_dir}/firewall_bypass_report.out'
+        self._cmd = 'nmap --script=firewall-bypass ${target}'
         self._example = self._cmd
         self._port = ''
         self._args = ''
@@ -940,7 +1124,7 @@ class NmapFume(NmapBase):
         self._desc = 'Retrieves information from Flume master HTTP pages.'
         self._name = 'NmapFume'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} --script=flume-master-info ${target} -oX ${working_dir}/fume_report.out'
+        self._cmd = 'nmap -p ${port} --script=flume-master-info ${target}'
         self._example = self._cmd
         self._port = '35871'
         self._args = ''
@@ -962,7 +1146,7 @@ class NmapFox(NmapBase):
         self._desc = 'Tridium Niagara Fox is a protocol used within Building Automation Systems.'
         self._name = 'NmapFox'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} --script=fox-info ${target} -oX ${working_dir}/fox_report.out'
+        self._cmd = 'nmap -p ${port} --script=fox-info ${target}'
         self._example = self._cmd
         self._port = '1911'
         self._args = ''
@@ -984,7 +1168,7 @@ class NmapFreelancer(NmapBase):
         self._desc = 'Detects the Freelancer game server (FLServer.exe) service by sending a status query UDP probe.'
         self._name = 'NmapFreelancer'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} --script=freelancer-info ${target} -oX ${working_dir}/freelancer_report.out'
+        self._cmd = 'nmap -p ${port} --script=freelancer-info ${target}'
         self._example = self._cmd
         self._port = '2302'
         self._args = ''
@@ -1006,7 +1190,7 @@ class NmapFtp(NmapBase):
         self._desc = 'FTP stuff.'
         self._name = 'NmapFtp'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} --script=ftp-anon,ftp-brute,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 ${target} -oX ${working_dir}/ftp_report.out'
+        self._cmd = 'nmap -p ${port} --script=ftp-anon,ftp-brute,ftp-libopie,ftp-proftpd-backdoor,ftp-syst,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221 ${target}'
         self._example = self._cmd
         self._port = '21,990'
         self._args = ''
@@ -1028,7 +1212,7 @@ class NmapHddTemp(NmapBase):
         self._desc = 'Reads hard disk information (such as brand, model, and sometimes temperature) from a listening hddtemp service.'
         self._name = 'NmapHddTemp'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} -sV --script=hddtemp-info ${target} -oX ${working_dir}/hddtemp_report.out'
+        self._cmd = 'nmap -p ${port} -sV --script=hddtemp-info ${target}'
         self._example = self._cmd
         self._port = '7634'
         self._args = ''
@@ -1050,7 +1234,7 @@ class NmapHnap(NmapBase):
         self._desc = 'Retrieve hardwares details and configuration information utilizing HNAP, the "Home Network Administration Protocol".'
         self._name = 'NmapHnap'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} -sV --script=hnap-info ${target} -oX ${working_dir}/hnap_report.out'
+        self._cmd = 'nmap -p ${port} -sV --script=hnap-info ${target}'
         self._example = self._cmd
         self._port = '80,8080'
         self._args = ''
@@ -1072,7 +1256,7 @@ class NmapHttpAnalytics(NmapBase):
         self._desc = 'Analytic scripts for HTTP servers, and web sites.'
         self._name = 'NmapHttpAnalytics'
         self._category = ToolCategory.Forensics
-        self._cmd = 'nmap -p ${port} http-affiliate-id.nse --script-args http-affiliate-id.url-path=${arg1} ${target} -oX ${working_dir}/http_anal_report.out'
+        self._cmd = 'nmap -p ${port} http-affiliate-id.nse --script-args http-affiliate-id.url-path=${arg1} ${target}'
         self._example = self._cmd
         self._port = '80,8080'
         self._args = ''
@@ -1103,8 +1287,7 @@ class NmapHttpEnum(NmapBase):
                     'http-generator,http-git,http-gitweb-projects-enum,http-grep,http-headers,http-internal-ip-disclosure,http-malware-host,http-mcmp,' + \
                     'http-open-redirect,http-php-version,http-qnap-nas-info,http-referer-checker,http-robots.txt,http-sitemap-generator,http-svn-enum,' + \
                     'http-svn-info,http-trane-info,http-virustotal,http-waf-detect,http-waf-fingerprint,http-wordpress-enum,http-wordpress-users,' + \
-                    'http-xssed ' + \
-                    '${target} -oX ${working_dir}/http_enum_report.out'
+                    'http-xssed ${target}'
         self._example = self._cmd
         self._port = '80,8080,443'
         self._args = ''
@@ -1129,7 +1312,7 @@ class NmapHttpExploit(NmapBase):
         self._cmd = 'nmap -p ${port} -sV --script=http-adobe-coldfusion-apsa1301,http-awstatstotals-exec,http-axis2-dir-traversal,http-dlink-backdoor,' + \
                     'http-drupal-enum-users,formpaths,http-phpmyadmin-dir-traversal,http-tplink-dir-traversal,http-traceroute,http-vuln-cve2006-3392,' + \
                     'http-vuln-cve2009-3960,http-vuln-cve2010-2861,http-vuln-cve2014-3704,http-vuln-cve2014-8877,http-vuln-cve2015-1427' + \
-                    '${target} -oX ${working_dir}/http_exploit_report.out'
+                    '${target}'
         self._example = self._cmd
         self._port = '80,8080,443'
         self._args = ''
@@ -1158,10 +1341,382 @@ class NmapHttpVul(NmapBase):
                     'http-vuln-cve2010-0738,http-vuln-cve2011-3368,http-vuln-cve2012-1823,http-vuln-cve2013-0156,http-vuln-cve2013-6786,http-vuln-cve2013-7091,' + \
                     'http-vuln-cve2014-2126,http-vuln-cve2014-2127,http-vuln-cve2014-2128,http-vuln-cve2014-2129,http-vuln-cve2015-1635,http-vuln-cve2017-1001000,' + \
                     'http-vuln-cve2017-5638,http-vuln-cve2017-5689,http-vuln-cve2017-8917,http-vuln-misfortune-cookie,http-vuln-wnr1000-creds,http-webdav-scan,' + \
-                    'http-wordpress-brute ' + \
-                    '${target} -oX ${working_dir}/http_vul_report.out'
+                    'http-wordpress-brute ${target}'
         self._example = self._cmd
         self._port = '80,8080,443'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapIphoto(NmapBase):
+    def __init__(self):
+        self._desc = 'Performs brute force password auditing against an iPhoto Library.'
+        self._name = 'NmapIphoto'
+        self._category = ToolCategory.VulnerabilityScanner
+        self._cmd = 'nmap -p ${port} ${target} --script=dpap-brute'
+        self._example = self._cmd
+        self._port = '8770'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapImapEnum(NmapBase):
+    def __init__(self):
+        self._desc = 'This script enumerates information from remote IMAP services with NTLM authentication enabled.'
+        self._name = 'NmapImapEnum'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -p ${port} --script=imap-ntlm-info,imap-capabilities ${target}'
+        self._example = self._cmd
+        self._port = '143,993'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapImapBrute(NmapBase):
+    def __init__(self):
+        self._desc = 'Performs brute force password auditing against IMAP servers using either LOGIN, PLAIN, CRAM-MD5, DIGEST-MD5 or NTLM authentication..'
+        self._name = 'NmapImapBrute'
+        self._category = ToolCategory.Password
+        self._cmd = 'nmap -p ${port} --script=imap-brute ${target}'
+        self._example = self._cmd
+        self._port = '143,993'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapInformixBrute(NmapBase):
+    def __init__(self):
+        self._desc = 'Performs brute force password auditing against IBM Informix Dynamic Server.'
+        self._name = 'NmapInformixBrute'
+        self._category = ToolCategory.Password
+        self._cmd = 'nmap -p ${port} --script=informix-brute ${target}'
+        self._example = self._cmd
+        self._port = '9088'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapMsSqlBrute(NmapBase):
+    def __init__(self):
+        self._desc = 'MS SQL stuff.'
+        self._name = 'NmapMsSqlBrute'
+        self._category = ToolCategory.Password
+        self._cmd = 'nmap -p ${port} --script=ms-sql-brute --script-args mssql.instance-all,userdb=${arg1},passdb=${arg2} ${target}'
+        self._example = self._cmd
+        self._port = '1433'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        port = None
+        users = None
+        passwords = None
+
+        if args != None:
+            for key, value in args.items():
+                if key == 'port':
+                    port = value
+                elif key == 'users':
+                    users = value
+                elif key == 'passwords':
+                    passwords = value
+
+        if port == None:
+            print('Enter port (1433): ', end = '')
+            port = input()
+            if port == None or port == '':
+                self._port = '1433'
+            else:
+                self._port = port
+        
+        if users == None:
+            print('Enter username list: ', end = '')
+            users = input()
+
+        if passwords == None:
+            print('Enter password list: ', end = '')
+            passwords = input()
+
+        self._cmd = self._cmd.replace('${arg1}', users)
+        self._cmd = self._cmd.replace('${arg2}', passwords)
+
+        super().run()
+        return
+
+class NmapMySqlEnum(NmapBase):
+    def __init__(self):
+        self._desc = 'MySQL enumeration.'
+        self._name = 'NmapMySqlEnum'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -p ${port} --script=mysql-info,mysql-enum,mysql-empty-password,mysql-vuln-cve2012-2122 ${target}'
+        self._example = self._cmd
+        self._port = '3306'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        port = None
+
+        if args != None:
+            for key, value in args.items():
+                if key == 'port':
+                    port = value
+
+        if port == None:
+            print('Enter port (3306): ', end = '')
+            port = input()
+            if port == None or port == '':
+                self._port = '3306'
+            else:
+                self._port = port
+
+        super().run()
+        return
+
+class NmapMySqlBrute(NmapBase):
+    def __init__(self):
+        self._desc = 'MySQL bruteforce.'
+        self._name = 'NmapMySqlBrute'
+        self._category = ToolCategory.Password
+        self._cmd = 'nmap -p ${port} --script=mysql-brute ${target}'
+        self._example = self._cmd
+        self._port = '3306'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        port = None
+
+        if args != None:
+            for key, value in args.items():
+                if key == 'port':
+                    port = value
+
+        if port == None:
+            print('Enter port (3306): ', end = '')
+            port = input()
+            if port == None or port == '':
+                self._port = '3306'
+            else:
+                self._port = port
+
+        super().run()
+        return
+
+class NmapSslEnum(NmapBase):
+    def __init__(self):
+        self._desc = 'Enum HTTPS.'
+        self._name = 'NmapSslEnum'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -p ${port} --script=ssl-ccs-injection,ssl-cert-intaddr,ssl-cert,ssl-datessl-dh-params,ssl-enum-ciphers,ssl-heartbleed,ssl-known-key,ssl-poodle,' \
+           'sslv2-drown,sslv2 ${target}'
+        self._example = self._cmd
+        self._port = '443'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSmbEnum(NmapBase):
+    def __init__(self):
+        self._desc = 'SMB scripts'
+        self._name = 'NmapSmbEnum'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -p ${port} --script=smb-enum*,smb-ls,smb-mbenum,smb-os-discovery,smb-protocols,smb-server-stats,smb-system-info,smb-security-mode,smb2-capabilities,' + \
+           'smb2-security-mode,smb2-time ${target}'
+        self._example = self._cmd
+        self._port = '445'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSmbVuln(NmapBase):
+    def __init__(self):
+        self._desc = 'SMB scripts'
+        self._name = 'NmapSmbVuln'
+        self._category = ToolCategory.VulnerabilityScanner
+        self._cmd = 'nmap -v -p ${port} --script=smb-vuln*,smb2-vuln* ${target}'
+        self._example = self._cmd
+        self._port = '445'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSmbBrute(NmapBase):
+    def __init__(self):
+        self._desc = 'SMB scripts'
+        self._name = 'NmapSmbBrute'
+        self._category = ToolCategory.Password
+        self._cmd = 'nmap -p ${port} --script=smb-brute ${target}'
+        self._example = self._cmd
+        self._port = '445'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSnmpBrute(NmapBase):
+    def __init__(self):
+        self._desc = 'SNMP brute forcer.'
+        self._name = 'NmapSnmpBrute'
+        self._category = ToolCategory.Password
+        self._cmd = 'nmap -sU --script snmp-brute ${target}'
+        self._example = self._cmd
+        self._port = '161'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSnmpEnum(NmapBase):
+    def __init__(self):
+        self._desc = 'SNMP enumeration.'
+        self._name = 'NmapSnmpEnum'
+        self._category = ToolCategory.Enumeration
+        self._cmd = 'nmap -sU -p ${port} --script snmp-info snmp-interfaces, snmp-netstat, snmp-processes, snmp-sysdescr, snmp-win32-services, ' \
+        'snmp-win32-shares, snmp-win32-software, snmp-win32-users ${target}'
+        self._example = self._cmd
+        self._port = '161'
+        self._args = ''
+        self._parserName = ''
+        return super().__init__()
+
+    def __repr__(self):
+        return super().__repr__()
+
+    def __str__(self):
+        return super().__str__()
+
+    def run(self, **args):
+        super().run()
+        return
+
+class NmapSsh(NmapBase):
+    def __init__(self):
+        self._desc = 'SSH scripts: Bruteforcer, and enumberator.'
+        self._name = 'NmapSsh'
+        self._category = ToolCategory.VulnerabilityScanner
+        self._cmd = 'nmap -p ${port} --script=sshv1,ssh2-enum-algos,ssh-hostkey,ssh-auth-methods,ssh-brute --script-args userdb=${user_file},passdb=${pass_file} ssh_hostkey=full ${target}'
+        self._example = self._cmd
+        self._port = '22'
         self._args = ''
         self._parserName = ''
         return super().__init__()
@@ -1182,7 +1737,7 @@ class NmapVlcStreamer(NmapBase):
                      'enable streaming of multimedia content from the remote server to the device.'
         self._name = 'NmapVlcStreamer'
         self._category = ToolCategory.Enumeration
-        self._cmd = 'nmap -p ${port} --script=http-vlcstreamer-ls ${target} -oX ${working_dir}/vlc_report.out'
+        self._cmd = 'nmap -p ${port} --script=http-vlcstreamer-ls ${target}'
         self._example = self._cmd
         self._port = '54340'
         self._args = ''
@@ -1204,7 +1759,7 @@ class NmapVmware(NmapBase):
         self._desc = 'Checks for a path-traversal vulnerability in VMWare ESX, ESXi, and Server (CVE-2009-3733).'
         self._name = 'NmapVmware'
         self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} --script=http-vmware-path-vuln ${target} -oX ${working_dir}/vmware_report.out'
+        self._cmd = 'nmap -p ${port} --script=http-vmware-path-vuln ${target}'
         self._example = self._cmd
         self._port = '80,443,8222,8333'
         self._args = ''
@@ -1220,42 +1775,3 @@ class NmapVmware(NmapBase):
     def run(self, **args):
         super().run()
         return
-
-class NmapMsSqlBrute(NmapBase):
-    def __init__(self):
-        self._desc = 'MS SQL stuff.'
-        self._name = 'NmapMsSqlBrute'
-        self._category = ToolCategory.VulnerabilityScanner
-        self._cmd = 'nmap -p ${port} --script=ms-sql-brute --script-args mssql.instance-all,userdb=${arg1},passdb=${arg2} ${target} -oX ${working_dir}/mssql_report.out'
-        self._example = self._cmd
-        self._port = '1433'
-        self._args = ''
-        self._parserName = ''
-        return super().__init__()
-
-    def __repr__(self):
-        return super().__repr__()
-
-    def __str__(self):
-        return super().__str__()
-
-    def run(self, **args):
-        print('Enter port (1433): ', end = '')
-        port = input()
-        if port == None or port == '':
-            self._port = '1433'
-        else:
-            self._port = port
-
-        print('Enter username list: ', end = '')
-        users = input()
-
-        print('Enter password list: ', end = '')
-        passwords = input()
-
-        self._cmd = self._cmd.replace('${arg1}', users)
-        self._cmd = self._cmd.replace('${arg2}', passwords)
-
-        super().run()
-        return
-
