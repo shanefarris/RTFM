@@ -11,6 +11,10 @@
     <OutputPath>.</OutputPath>
     <Name>RTFM</Name>
     <RootNamespace>RTFM</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterArguments>
+    </InterpreterArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +61,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Templates.py" />
-    <Compile Include="Tool.py" />
     <Compile Include="ToolManager.py" />
     <Compile Include="Utility.py">
       <SubType>Code</SubType>

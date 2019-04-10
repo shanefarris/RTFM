@@ -7,9 +7,9 @@ from subprocess import Popen, PIPE
 from threading import Thread
 from colorama import Fore, Back, Style, init
 
-from Tool import ToolCategory
 from Session import *
 from MenuBase import *
+from ToolManager import *
 from Parsers import ParserNmap, ParserPrivesc
 
 class Enumeration(MenuBase):
@@ -17,8 +17,6 @@ class Enumeration(MenuBase):
     def __init__(self):
         init()
         self.targetOS = 'Agnostic'
-        self._nmaps = []
-        self._niktos = []
         self._tsharks = []
         self._tcpdumps = []
 
@@ -30,23 +28,19 @@ class Enumeration(MenuBase):
                        5 : 'Quiet Syn Nmap scan (TCP)',
                        6 : 'Ping Scan (for subnets)',
                        7 : 'OS Fingerprinting Nmap scan',
-                       8 : 'HTTP Enumerator scan',
-                       9 : 'Quick/Simple scan',
+                       8 : 'Quick/Simple scan',
                        10 : 'Super Stealth Scan',
                        18 : 'Parse all Nmap files',
-                       19 : 'Stop Nmap',
                        -2 : '',
                        -3 : 'Nikto:',
                        20 : 'Config Options',
                        21 : 'Standard Scan',
                        22 : 'Use Proxy (Setup proxy manually)',
-                       29 : 'Stop Nikto',
                        -4 : '',
                        -5 : 'TShark:',
                        30 : 'All Traffic',
                        31 : 'HTTP Only',
                        32 : 'DNS Analysis',
-                       39 : 'Stop TShark',
                        -6 : '',
                        -7 : 'Other Tools:',
                        40 : 'DnsRecon (Need name not IP)',
@@ -60,8 +54,7 @@ class Enumeration(MenuBase):
                        -9 : 'tcpdump:',
                        60 : 'All Traffic',
                        61 : 'HTTP Only',
-                       62 : 'DNS Analysis',
-                       63 : 'Stop TShark' }
+                       62 : 'DNS Analysis' }
 
         self._internals = { 1 : 'Standard Local Scan/Enumeration', 2 : 'Lynis (Linux/Unix only)', 3 : 'unix-privesc-check (Linux/Unix Only)' }
 
@@ -93,13 +86,6 @@ class Enumeration(MenuBase):
         target = session.getRemoteHost()
         dir = session.getIntelDir()
 
-        # Do we want to stop all nikto processes
-        if index == 29:
-            for t in self._niktos:
-                t.terminate()
-                session.PROCS.remove(t)
-            return
-
         cmd = 'NO COMMAND CREATED'
 
         if index == 20:
@@ -113,90 +99,39 @@ class Enumeration(MenuBase):
             cmd = 'nikto -useproxy -Display V -host ' + target + ' -Format HTM -output ' + dir + '/nikto.html'
 
         if cmd != 'NO COMMAND CREATED':
-            session.runThreadedCmd(cmd, cmd, self._niktos)
+            session.runThreadedCmd(cmd, cmd)
 
     def runNmap(self, index):
-        target = session.getRemoteHost()
-        dir = session.getIntelDir()
-        parser = ParserNmap()
-
-        # Do we want to stop all nmap processes
-        if index == 19:
-            for t in self._nmaps:
-                t.terminate()
-                session.PROCS.remove(t)
-            return
-
         if index == 18:
+            parser = ParserNmap()
             import glob
             for file in glob.glob(session.getIntelDir() + '/nmap_*'):
                 print(self.TITLE + 'Parsing: ' + file + self.ENDC)
                 parser.parseFile(file)
             return
 
-        cmd = 'NO COMMAND CREATED'
-        title = 'Nmap scan: '
-        outFile = ''
-
         if index == 1:
-            outFile = dir + '/nmap_loudTcp.xml'
-            cmd = 'nmap -v -sT -sV -A -T4 -p1-65535 ' + target + ' -oX ' + outFile
-            title = title + '(Loud TCP)'
+            session.toolManager.runByName('NmapLoudTcp', ToolCategory.Enumeration, threaded = True)
         elif index == 2:
-            outFile = dir + '/nmap_loudUdp.xml'
-            cmd = 'nmap -v -sU -sV -A -T4 -p1-65535 ' + target + ' -oX ' + outFile
-            title = title + '(Loud UDP)'
+            session.toolManager.runByName('NmapLoudUdp', ToolCategory.Enumeration, threaded = True)
         elif index == 3:
-            outFile = dir + '/nmap_loudStandardTcp.xml'
-            cmd = 'nmap -v -sT -sV -T4 ' + target + ' -oX ' + outFile
-            title = title + '(Loud Standard TCP)'
+            session.toolManager.runByName('NmapStandardTcp', ToolCategory.Enumeration, threaded = True)
         elif index == 4:
-            outFile = dir + '/nmap_loudStandardUdp.xml'
-            cmd = 'nmap -v -sU -sV -T4 ' + target + ' -oX ' + outFile
-            title = title + '(Loud Standard UDP)'
+            session.toolManager.runByName('NmapStandardUdp', ToolCategory.Enumeration, threaded = True)
         elif index == 5:
-            outFile = dir + '/nmap_sneaky.xml'
-            print('Will take about 4.5 hours')
-            cmd = 'nmap -v -sS -P0 -T0 ' + target + ' -oX ' + outFile
-            title = title + '(Quiet)'
+            session.toolManager.runByName('NmapSneaky', ToolCategory.Enumeration, threaded = True)
         elif index == 6:
-            outFile = dir + '/nmap_ping.xml'
-            cmd = 'nmap -v -sP ' + target + ' -oX ' + outFile
-            title = title + '(Ping)'
+            session.toolManager.runByName('NmapPing', ToolCategory.Enumeration, threaded = True)
         elif index == 7:
-            outFile = dir + '/nmap_version.xml'
-            cmd = 'nmap -v -sV ' + target + ' -oX ' + outFile
-            title = title + '(Version)'
+            session.toolManager.runByName('NmapVersion', ToolCategory.Enumeration, threaded = True)
         elif index == 8:
-            outFile = dir + '/nmap_http-enum.xml'
-            cmd = 'nmap -v -script=http-enum ' + target + ' -oX ' + outFile
-            title = title + '(HTTP Scripts)'
-        elif index == 9:
-            outFile = dir + '/nmap_quick.xml'
-            cmd = 'nmap -v -F ' + target + ' -oX ' + outFile
-            title = title + '(HTTP Scripts)'
+            session.toolManager.runByName('NmapQuick', ToolCategory.Enumeration, threaded = True)
         elif index == 10:
-            outFile = session.toolManager.runByName('NmapStealth', ToolCategory.Enumeration)
-            cmd = ''
-
-        if cmd == 'NO COMMAND CREATED':
-            print(cmd)
-            return
-        else:
-            cmd += cmd + ' | tee -a ' + dir + '/nmap.out'
-            session.runThreadedCmd(cmd, title, self._nmaps, parser.parseFile, outFile) # Passing outFile as arg for the parser to use.
+            session.toolManager.runByName('NmapStealth', ToolCategory.Enumeration)
 
     def runTshark(self, index):
         target = session.getRemoteHost()
         dir = session.getIntelDir()
-
-        # Do we want to stop all tshark processes
-        if index == 39:
-            for t in self._tsharks:
-                t.terminate()
-                if t in session.PROCS:
-                    session.PROCS.remove(t)
-            return
 
         # List and select which interface
         if platform.system() == 'Windows':
@@ -227,7 +162,7 @@ class Enumeration(MenuBase):
 
         # Combine all options and log it
         cmd = cmd + ' ' + filter + ' -w ' + file 
-        session.runThreadedCmd(cmd, cmd, self._tsharks)
+        session.runThreadedCmd(cmd, cmd)
             
         import time
         time.sleep(3)
@@ -249,14 +184,14 @@ class Enumeration(MenuBase):
                 cmd = 'whatweb -v -a 3 ' + session.getRemoteHost() + ' | tee ' + outfile
             session.runCmdSimple(cmd, 'Using whatweb for vulnerability scanning', outfile)
         elif index == 42:
-            session.runThreadedCmd('dirb http://' + session.getRemoteHost() + ' -w | tee ' + dir + '/dirb.txt', 'Dirb')
+            session.runThreadedCmd('dirb http://' + session.getRemoteHost() + ' -w -S | tee ' + dir + '/dirb.txt', 'Dirb')
         elif index == 43:
             session.runThreadedCmd('wpscan' + session.getRemoteHost() + ' | tee ' + dir + '/wpscan.txt', 'Wpscan')
         elif index == 44:
             session.runCmdSimple('/etc/init.d/nessusd start')
             session.runCmdSimple('firefox https://localhost:8834', 'Starting Nessus scanner')
         elif index == 45:
-            session.runCmdSimple('systemctl start nexposeconsole.serivce')
+            session.runCmdSimple('service nexposeconsole start')
             session.runCmdSimple('firefox https://localhost:3780', 'Starting Nexpose scanner')
         elif index == 46:
             session.runCmdSimple('openvas-start')
@@ -265,17 +200,25 @@ class Enumeration(MenuBase):
     def runTcpdump(self, index):
         target = session.getRemoteHost()
         dir = session.getIntelDir()
+        cmd = 'tcpdump -i eth0 '
+        file = ''
+        filter = ''
+        title = ''
 
         if index == 60:
-            file = dir + '/tshark_all.pcap '
-        elif index == 31:
-            file = dir + '/tshark_http.pcap '
+            file = dir + '/tcpdump_all.pcap '
+            title = 'tcpdump All'
+        elif index == 61:
+            file = dir + '/tcpdump_http.pcap '
             filter = filter + ' -Y http.request '
-        elif index == 32:
-            file = dir + '/tshark_http.pcap '
+            title = 'tcpdump HTTP'
+        elif index == 62:
+            file = dir + '/tcpdump_http.pcap '
             filter = filter + ' -f "src port 53" -n -T fields -e dns.qry.name -e dns.resp.addr '
+            title = 'tcpdump DNS'
 
-        session.runThreadedCmd(cmd, cmd, self._tsharks)
+        cmd += ' -w ' + file + ' ' + filter
+        session.runThreadedCmd(cmd, cmd)
 
         return
 
@@ -922,7 +865,7 @@ class Enumeration(MenuBase):
 
     def sys_call_new(self, arg, file):
         cal = subprocess.call(arg + ' > ' + file, shell=True)
-        session.addReportCmd(cmd)
+        session.addReportCmd(arg)
 
     def sys_call(self, arg, file):
         cal = subprocess.call(arg + ' >> ' + file, shell=True)

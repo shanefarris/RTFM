@@ -1,17 +1,20 @@
 {
     "SESSION": [
         {
-            "rhost": "192.168.159.139",
+            "rhost": "192.168.159.132",
             "rport": "all",
             "target_os": "Linux",
-            "session_id": ".\\debug12345",
+            "session_id": "debug12345",
             "threads": "50",
+            "output_tty": null,
+            "auto_screenshot": false,
             "wordlist": "rockyou.txt",
             "http_wordlist": "/usr/share/wordlists/rockyou.txt",
             "db_wordlist": "db_list.txt",
             "userlist": "users.txt"
         }
     ],
+    "USER_ACCOUNTS": [],
     "SERVICES": [
         {
             "name": "ftp",
@@ -204,45 +207,21 @@
     ],
     "CHECKLISTS": [
         {
-            "NetworkScan": [
-                {
-                    "id": "1",
-                    "result": "DONE",
-                    "notes": "notes 1"
-                },
-                {
-                    "id": "2",
-                    "result": "DONE",
-                    "notes": "notes 2"
-                },
-                {
-                    "id": "3",
-                    "result": "NO",
-                    "notes": "notes 3"
-                },
-                {
-                    "id": "4",
-                    "result": "DONE",
-                    "notes": "notes 4"
-                }
-            ]
-        },
-        {
             "Http": [
                 {
                     "id": "1",
-                    "result": "DONE",
+                    "result": "NO",
                     "notes": ""
                 },
                 {
                     "id": "2",
-                    "result": "DONE",
+                    "result": "NO",
                     "notes": ""
                 },
                 {
                     "id": "3",
                     "result": "NO",
-                    "notes": "here are some notes\r\nstill working on notes"
+                    "notes": ""
                 },
                 {
                     "id": "4",
@@ -293,11 +272,21 @@
                     "id": "13",
                     "result": "NO",
                     "notes": ""
+                },
+                {
+                    "id": "14",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "15",
+                    "result": "NO",
+                    "notes": ""
                 }
             ]
         },
         {
-            "Smb": [
+            "EscalationLinux": [
                 {
                     "id": "1",
                     "result": "NO",
@@ -315,6 +304,599 @@
                 },
                 {
                     "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "7",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "8",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "9",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "10",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "11",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "12",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "13",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "14",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "15",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "16",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "17",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "18",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "19",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "20",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "21",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "22",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "23",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "24",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "25",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "26",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "27",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "28",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "29",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "30",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "31",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "32",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "33",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "34",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "35",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "36",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "37",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "38",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "39",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "EscalationWindows": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "7",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "8",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "9",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "10",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "11",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "12",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "FileTransfer": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "MySql": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "7",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "8",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "NetworkScan": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "NotableExploits": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "Oracle DB": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "PHP": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "Postgres Server": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "RootedLinux": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "7",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "RootedWindows": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "7",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "8",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "SMB": [
+                {
+                    "id": "1",
+                    "result": "DONE",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "DONE",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "6",
+                    "result": "NO",
+                    "notes": ""
+                }
+            ]
+        },
+        {
+            "SQL Server": [
+                {
+                    "id": "1",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "2",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "3",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "4",
+                    "result": "NO",
+                    "notes": ""
+                },
+                {
+                    "id": "5",
                     "result": "NO",
                     "notes": ""
                 }

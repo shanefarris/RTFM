@@ -6,15 +6,18 @@ import logging
 import json
 from datetime import date
 from threading import Thread
+from subprocess import DEVNULL
 
 import TargetHost
 import Attack
 import ToolManager
 import Checklist
+import Utility
 from MenuBase import MenuBase
 
 class Session():
     def __init__(self, name = None):
+        self._procs = { }
         pass
 
     def start(self, name = None, isNew = False, ip = None):
@@ -36,22 +39,24 @@ class Session():
         import Maintain
         import Parsers
 
+        self._rhost = '127.0.0.1'
+        self._rport = 'ALL'
+        self._targetOS = 'Agnostic'
+        self._sessionId = ''
+        self._threads = '50'
+        self._outputTty = None
+        self._autoScreenShot = False
+        self._wordlist = '/usr/share/wordlists/rockyou.txt'
+        self._httpWordlist = '/usr/share/wordlists/rockyou.txt'
+        self._dbWordlist = '/usr/share/wordlists/rockyou.txt'
+        self._userlist = '../wordlists/usernames.txt'
+        
         self.DEV_MODE = True
         self.CWD = os.getcwd()
         self.attackManager = Attack.AttackManager()
         self.targetHost = TargetHost.TargetHost()
         self.parserManager = Parsers.ParserManager()
         self.checklistManager = Checklist.ChecklistManager()
-
-        self._rhost = '127.0.0.1'
-        self._rport = 'ALL'
-        self._targetOS = 'Agnostic'
-        self._sessionId = ''
-        self._threads = '50'
-        self._wordlist = '/usr/share/wordlists/rockyou.txt'
-        self._httpWordlist = '/usr/share/wordlists/rockyou.txt'
-        self._dbWordlist = '/usr/share/wordlists/rockyou.txt'
-        self._userlist = '/usr/share/wordlists/rockyou.txt'
 
         if name == None or len(name) < 5 or isNew == True:
             # New session
@@ -169,6 +174,20 @@ class Session():
         self._threads = threads
         self.save()
 
+    def setOutputTty(self, tty):
+        self._outputTty = tty
+        self.save()
+
+    def getOutputTty(self):
+        return self._outputTty
+
+    def setAutoScreenShot(self, isAutoScreenShot):
+        self._autoScreenShot = isAutoScreenShot
+        self.save()
+
+    def getAutoScreenShot(self):
+        return self._autoScreenShot
+
     def getWordlist(self):
         return self._wordlist
 
@@ -197,6 +216,9 @@ class Session():
         self._userlist = userlist
         self.save()
 
+    def getActiveProcs(self):
+        return self._procs
+
     # endregion
 
     def save(self):
@@ -211,11 +233,23 @@ class Session():
                 'target_os' : self._targetOS,
                 'session_id' : self._sessionId,
                 'threads' : self._threads,
+                'output_tty': self._outputTty,
+                'auto_screenshot': self._autoScreenShot,
                 'wordlist' : self._wordlist,
                 'http_wordlist' : self._httpWordlist,
                 'db_wordlist' : self._dbWordlist,
                 'userlist' : self._userlist
         })
+
+        # User Accounts
+        session['USER_ACCOUNTS'] = []
+        for userAccount in self.targetHost.getUserAccounts():
+            session['ACCOUNT'].append({
+                    'username' :  str(userAccount.getUsername()),
+                    'password' :  str(userAccount.getPassword()),
+                    'email' :  str(userAccount.getEmail()),
+                    'notes' :  str(userAccount.getNotes())
+                })
 
         # Services
         session['SERVICES'] = []
@@ -259,7 +293,7 @@ class Session():
 
         # Checklists
         session['CHECKLISTS'] = []
-        for category in self.checklistManager.getChecklists():
+        for i, category in self.checklistManager.getChecklists().items():
             checklistCat = {}
             checklistCat[category._CategoryName] = []
             for i, item in category._items.items():
@@ -283,37 +317,68 @@ class Session():
         with open(sessionId + '/session.json', encoding="utf8") as f:
             data = json.load(f)
 
-        for session in data['SESSION']:
-            self._targetOS = session['target_os']
-            self._rhost = session['rhost']
-            self._rport = session['rport']
-            self._threads = session['threads']
-            self._wordlist = session['wordlist']
-            self._httpWordlist = session['http_wordlist']
-            self._dbWordlist = session['db_wordlist']
-            self._userlist = session['userlist']
+        if 'SESSION' in data:
+            sesstionData = data['SESSION'][0]
+            if 'target_os' in sesstionData:
+                self._targetOS = sesstionData['target_os']
+
+            if 'rhost' in sesstionData:
+                self._rhost = sesstionData['rhost']
+
+            if 'rport' in sesstionData:
+                self._rport = sesstionData['rport']
+                
+            if 'threads' in sesstionData:    
+                self._threads = sesstionData['threads']
+
+            if 'output_tty' in sesstionData:
+                self._outputTty = sesstionData['output_tty']
+
+            if 'auto_screenshot' in sesstionData:
+                self._autoScreenShot = sesstionData['auto_screenshot']
+
+            if 'wordlist' in sesstionData:
+                self._wordlist = sesstionData['wordlist']
+
+            if 'http_wordlist' in sesstionData:
+                self._httpWordlist = sesstionData['http_wordlist']
+
+            if 'db_wordlist' in sesstionData:
+                self._dbWordlist = sesstionData['db_wordlist']
+
+            if 'userlist' in sesstionData:
+                self._userlist = sesstionData['userlist']
             
-        for service in data['SERVICES']:
-            self.targetHost.addService(service['port'], service['protocol'], service['status'], service['name'], service['version'])
+        if 'USER_ACCOUNTS' in data:
+            for userAccount in data['USER_ACCOUNTS']:
+                self.targetHost.addUserAccount(userAccount['username'], userAccount['password'], userAccount['email'], userAccount['notes'])
 
-        for attack in data['ATTACKS']:
-            attack = Attack.Attack(attack['name'], attack['file'], attack['desc'], attack['service'], attack['id'], attack['date'], attack['type'], attack['platform'])
-            self.attackManager.addAttack(attack)
+        if 'SERVICES' in data:
+            for service in data['SERVICES']:
+                self.targetHost.addService(service['port'], service['protocol'], service['status'], service['name'], service['version'])
 
-        for dir in data['HTTP_DIR']:
-            self.targetHost.addHttpDirectory(dir['dir'])
+        if 'ATTACKS' in data:
+            for attack in data['ATTACKS']:
+                attack = Attack.Attack(attack['name'], attack['file'], attack['desc'], attack['service'], attack['id'], attack['date'], attack['type'], attack['platform'])
+                self.attackManager.addAttack(attack)
 
-        for file in data['HTTP_FILE']:
-            self.targetHost.addHttpFile(file['file'])
+        if 'HTTP_DIR' in data:
+            for dir in data['HTTP_DIR']:
+                self.targetHost.addHttpDirectory(dir['dir'])
 
-        for note in data['NOTES']:
-            self.targetHost.addNotes(note['note'])
+        if 'HTTP_FILE' in data:
+            for file in data['HTTP_FILE']:
+                self.targetHost.addHttpFile(file['file'])
 
-        
-        for checklist in data['CHECKLISTS']:
-            for name, category in checklist.items():
-                for item in category:
-                    self.checklistManager.setValue(name, item['id'], item['result'], item['notes'])
+        if 'NOTES' in data:
+            for note in data['NOTES']:
+                self.targetHost.addNotes(note['note'])
+
+        if 'CHECKLISTS' in data:
+            for checklist in data['CHECKLISTS']:
+                for name, category in checklist.items():
+                    for item in category:
+                        self.checklistManager.setValue(name, item['id'], item['result'], item['notes'])
 
         self._id = sessionId[-5:]
         self._workingDir = './' + self._sessionId
@@ -321,27 +386,24 @@ class Session():
         return
 
     def addReportCmd(self, cmd, comments = '', outputFile = ''):
-        import time
-        import datetime
         import random
 
-        timestamp = time.time()
-        reportDate = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+        reportDate = Utility.getTimestamp()
 
-        with open(self._reportDir + '/cmd.md','a') as report:
-            report.write('')                    # Blank line
+        with open(self._reportDir + '/cmd.md','a') as f:
+            print('', file = f)                 # Blank line
             if len(comments) > 0:               # Check for comments
-                report.write(comments)
-                report.write('')
+                print(comments, file = f)
+                print('', file = f)
 
-            report.write('> ' + cmd)            # Write command
+            print('> ' + cmd, file = f)         # Write command
 
             if len(outputFile) > 0:             # Check for output file and put in footnotes
                 num = random.randint(1000,9999)
-                report.write('Output file is created [^' + num + ']')
-                report.write('[^' + num + '] ' + outputFile)
+                print('Output file is created [^' + str(num) + ']', file = f)
+                print('[^' + str(num) + '] ' + outputFile, file = f)
 
-            report.write('')
+            print('', file = f)
         return
 
     def endProgram(self):
@@ -350,58 +412,91 @@ class Session():
     
             try:
                 self.save()
+                print('Saved session')
             except Exception as e:
                 logging.exception(e)
 
-            for p in self.PROCS:
+            for title, proc in self._procs.items():
                 try:
-                    print('Terminating PID: ' + str(p.pid))
-                    p.terminate()
+                    print('Terminating PID: ' + str(proc.pid) + ': ' + title)
+                    proc.kill() # TODO: this does not work
                     #Popen("TASKKILL /F /PID {pid} /T".format(pid=p.pid))
                 except:
                     continue
-
-            #for t in session.THREADS:
-            #    t.stop()
         except:
             pass
 
         quit()
 
+    def endProcess(self, pid):
+        import signal
+
+        try:
+            from subprocess import Popen
+    
+            for title, proc in self._procs.items():
+                if str(proc.pid) == str(pid):
+                    os.killpg(os.getpgid(int(pid)), signal.SIGTERM) # TODO: this does not work
+                    print('killed ' + pid)
+        except:
+            pass
+
+        # Remove the process
+        del self._procs[title]
+
     def runCmdSimple(self, cmd, comments = '', outputFile = '', quiet = False):
         import os
+
         print(MenuBase.CMD + cmd + MenuBase.ENDC)
         if quiet == True:
             os.system(cmd + ' &> /dev/null') # Not windows compatible
         else:
             os.system(cmd)
+
+        if self._autoScreenShot == True and platform.system() != 'Windows':                            # Take a screen shot
+            os.system('import -window root ' + self._reportDir + '/' + Utility.getTimestamp() + '.png')
         
         self.addReportCmd(cmd, comments, outputFile)
 
-    def runCmd(self, cmd, title, appList = None, onComplete = None, arg = None, quiet = False, comments = ''):
+    def runCmd(self, cmd, title, onComplete = None, arg = None, quiet = False, comments = ''):
         import subprocess
 
+        originalCmd = cmd
         useShell = True
+
+        if title == '' or title == None:
+            title = originalCmd
+
         if platform.system() == 'Windows':
             useShell = False
     
         print(MenuBase.CMD + cmd + MenuBase.ENDC)
 
-        proc = None
         if quiet == True:
-            with open(os.devnull, 'w') as FNULL:
-                proc = subprocess.Popen(cmd, stdout=FNULL, shell=useShell)
-        else:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=useShell)
-            
-        self.PROCS.append(proc)
-        self.addReportCmd(cmd, comments)
-
-        if appList != None:
-            appList.append(proc)
-
-        while proc.poll() == None:
             pass
+        else:
+            if self._outputTty != None and self._outputTty != '' and platform.system() != 'Windows':   # Do we need to output to a different TTY
+                if '|' in cmd:                                                                         # Are we already piping to a file
+                    cmd += ' ' + self._outputTty
+                else:
+                    cmd += ' > ' + self._outputTty
+
+        # Execute
+        if platform.system() == 'Windows':
+            proc = subprocess.Popen(cmd, stdout=DEVNULL, shell=useShell)
+        else:
+            proc = subprocess.Popen(cmd, stdout=DEVNULL, shell=useShell, preexec_fn=os.setsid)
+            
+        # Add process to our list
+        self._procs.update({ title : proc })
+        self.addReportCmd(originalCmd, comments)
+
+        import time
+        while proc.poll() == None:                                                                     # Wait for it to execute
+            time.sleep(1)
+
+        if self._autoScreenShot == True and platform.system() != 'Windows':                            # Take a screen shot
+            os.system('import -window root ' + self._reportDir + '/' + Utility.getTimestamp() + '.png')
 
         print(MenuBase.MSG + title + ': is completed' + MenuBase.ENDC + '\n> ', end = '')
 
@@ -411,8 +506,12 @@ class Session():
             else: 
                 onComplete(arg)
 
-    def runThreadedCmd(self, cmd, title, appList = None, onComplete = None, arg = None):
-        t = Thread(target=self.runCmd, args=(cmd, title, appList, onComplete, arg)) 
+        # Remove the process
+        if title in self._procs:
+            del self._procs[title]
+
+    def runThreadedCmd(self, cmd, title, onComplete = None, arg = None):
+        t = Thread(target=self.runCmd, args=(cmd, title, onComplete, arg)) 
         t.start()
 
 global session

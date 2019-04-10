@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import platform
 import argparse
@@ -21,8 +22,8 @@ if __name__ == "__main__":
         elif args.new:
             session.start(args.new, True, args.ip)
         else:
-            session.start()
-            #session.start('debug12345')
+            #session.start()
+            session.start('debug12345')
 
         session.screen.optionsShow()
 
@@ -34,10 +35,11 @@ if __name__ == "__main__":
 
 # TODOS:
 '''
-2. implement Tcpdump
+https://guif.re/
+msfvenom wizard (customized tool)
+better tcpdump wizard
 7. Proxychains
 8. RAT
-10. msfvenom 
 Parat - Undetectable Python Payload
 install dbqwaudit
 install john-omp
@@ -46,13 +48,22 @@ wordlists:
     AD/Windows network passwords
     web passwords
     http directories
-    users
+    users (done)
     compile, and remove duplicates
     create top choice list
     take total list and chop it into ~4 to pass to all kali servers
 
 parsers:
 Gobuster
+
+DNS zone transfer (page 102)
+DNSRecon ( dnsrecon -d megacorpone.com -t axfr)
+if you have oracle, run:
+	oscanner -s 192.168.1.200 -P 1521 
+	tnscmd10g version -h TARGET
+	nmap --script=oracle-tns-version 
+	nmap --script=oracle-sid-brute
+	nmap --script=oracle-brute 
 
 ================== ATTACKING =================
 FTP:
@@ -69,10 +80,5 @@ check for sql injection
 
 Images found:
 exiftool to analyize the image/s
-
-SSH:
-bruteforce using: hydra
-
-
 
 '''

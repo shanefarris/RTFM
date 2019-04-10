@@ -7,6 +7,7 @@ from Session import *
 class Setup:
 
     def __init__(self):
+
         self._options = { -1 : 'Install:',
                            1 : 'Standard (BATCH)',
                            2 : 'Nikto',
@@ -19,6 +20,12 @@ class Setup:
                            9 : 'Discover Scripts',
                           10 : 'Httrack (Scraper)',
                           11 : 'OpenVAS',
+                          12 : 'Ming C Compiler',
+                          13 : 'Hyperion',
+                          14 : 'Ettercap',
+                          15 : 'Imagemagick',
+                          16 : 'FTP Client',
+                          17 : 'tkinter',
                           29 : 'All (BATCH)',
                           -2 : '',
                           -3 : 'Program Options:',
@@ -53,53 +60,68 @@ class Setup:
             self.installHttrack()
         elif index == 11:
             self.installOpenVAS()
+        elif index == 12:
+            self.installMing()
+        elif index == 13:
+            self.installHyperion()
+        elif index == 14:
+            self.installEttercap()
+        elif index == 15:
+            self.installImagemagick()
+        elif index == 16:
+            self.installFtp()
+        elif index == 17:
+            self.installTkinter()
         elif index == 29:
             self.installAll()
 
     def installStandard(self):
+        os.system('pip install colorama')
+
         if platform.system() == 'Windows':
-            session.runCmdSimple('python -m pip install -U pip')
-            #session.runCmdSimple('pip install scapy')
-            session.runCmdSimple('pip install python-libnmap')
+            os.system('python -m pip install -U pip')
+            #os.system('pip install scapy')
+            os.system('pip install python-libnmap')
             print('Trying to download PentestBox: https://pentestbox.org')
-            session.runCmdSimple('Invoke-WebRequest -OutFile ./PentestBox.exe https://sourceforge.net/projects/pentestbox')
+            os.system('Invoke-WebRequest -OutFile ./PentestBox.exe https://sourceforge.net/projects/pentestbox')
         else:
-            session.runCmdSimple('echo \"deb http://http.kali.org/kali kali-rolling main contrib non-free\" >> /etc/apt/sources.list')
-            session.runCmdSimple('apt-get update && apt-get upgrade')
-            session.runCmdSimple('pip install -U pip')
-            session.runCmdSimple('apt update && apt -y install exploitdb')
-            session.runCmdSimple('apt -y install libxml2-utils')
-            session.runCmdSimple('searchsploit -u')
-            session.runCmdSimple('apt-get install python3-libnmap')
-            session.runCmdSimple('apt -y install libxml2-utils')
-            session.runCmdSimple('apt-get install python-setuptools python-pip')
-            session.runCmdSimple('gunzip /usr/share/wordlists/rockyou.txt.gz')
-            session.runCmdSimple('apt-get install nbtscan-unixwiz')
-            session.runCmdSimple('apt-get install pluma')
-            session.runCmdSimple('apt-get install apt2')
-            session.runCmdSimple('apt-get install casefile')
-            session.runCmdSimple('apt install gnome-screenshot')
-            session.runCmdSimple('../Scripts/playbook_install.sh')
-            session.runCmdSimple('apt -y --reinstall install open-vm-tools-desktop fuse')
-            session.runCmdSimple('mkdir /mnt/hgfs')
-            session.runCmdSimple('mkdir /mnt/hgfs/Shared')
-            session.runCmdSimple('vmhgfs-fuse -o allow_other -o auto_unmount .host:/Shared /mnt/hgfs/Shared')
+            os.system('echo \"deb http://http.kali.org/kali kali-rolling main contrib non-free\" >> /etc/apt/sources.list')
+            os.system('apt-get -y update && apt-get upgrade')
+            os.system('pip install -U pip')
+            os.system('apt -y update && apt -y install exploitdb')
+            os.system('apt -y install libxml2-utils')
+            os.system('searchsploit -u')
+            os.system('apt-get -y install python3-libnmap')
+            os.system('apt -y install libxml2-utils')
+            os.system('apt-get -y install python-setuptools python-pip')
+            os.system('gunzip /usr/share/wordlists/rockyou.txt.gz')
+            os.system('apt-get -y install nbtscan-unixwiz')
+            os.system('apt-get -y install pluma')
+            os.system('apt-get -y install apt2')
+            os.system('apt-get -y install casefile')
+            os.system('apt install gnome-screenshot')
+            os.system('../Scripts/playbook_install.sh')
+            os.system('apt -y --reinstall install open-vm-tools-desktop fuse')
+            os.system('mkdir /mnt/hgfs')
+            os.system('mkdir /mnt/hgfs/Shared')
+            os.system('vmhgfs-fuse -o allow_other -o auto_unmount .host:/Shared /mnt/hgfs/Shared')
+            os.system('apt-get install gcc-multilib g++-multilib')
             
             # Missing Nmap scripts
             # db2-discover
-            session.runCmdSimple('cp ../Scripts/broadcast-hid-discoveryd.nse /usr/share/nmap/scripts')
-            session.runCmdSimple('cp ../Scripts/db2-das-info.nse /usr/share/nmap/scripts')
-            session.runCmdSimple('cp ../Scripts/broadcast-jenkins-discover.nse /usr/share/nmap/scripts; nmap --script-updatedb')
+            os.system('cp ../Scripts/broadcast-hid-discoveryd.nse /usr/share/nmap/scripts')
+            os.system('cp ../Scripts/db2-das-info.nse /usr/share/nmap/scripts')
+            os.system('cp ../Scripts/broadcast-jenkins-discover.nse /usr/share/nmap/scripts; nmap --script-updatedb')
             
     def installAll(self):
         self.installStandard()
             
             # Install scapy from source
-            #session.runCmdSimple('mkdir tmp')
-            #session.runCmdSimple('wget --trust-server-names https://github.com/secdev/scapy/archive/master.zip ./tmp')
-            #session.runCmdSimple('unzip ./tmp/scapy-master')
-            #session.runCmdSimple('cd master')
-            #session.runCmdSimple('python3 ./tmp/scapy-master/setup.py install')
+            #os.system('mkdir tmp')
+            #os.system('wget --trust-server-names https://github.com/secdev/scapy/archive/master.zip ./tmp')
+            #os.system('unzip ./tmp/scapy-master')
+            #os.system('cd master')
+            #os.system('python3 ./tmp/scapy-master/setup.py install')
 
             # If libnmap doesn't install, try this
             
@@ -107,7 +129,7 @@ class Setup:
             #cd python-libnmap
             #python setup.py install
             
-        #session.runCmdSimple('pip install python-nmap')
+        #os.system('pip install python-nmap')
         
         self.installNikto()
         self.installNmap()
@@ -115,6 +137,11 @@ class Setup:
         self.installPyshark()
         self.installHttrack()
         self.installOpenVAS()
+        self.installMing()
+        self.installHyperion()
+        self.installEttercap()
+        self.installImagemagick()
+        self.installTkinter()
 
     def installNikto(self):
         print('** Installing Nikto **')
@@ -123,23 +150,23 @@ class Setup:
         if platform.system() == 'Windows':
             print('DOWNLOAD: https://projects.giacomodrago.com/nikto-win/nikto-2.1.5-win.7z')
         else:
-            session.runCmdSimple('git clone https://github.com/sullo/nikto ~')
+            os.system('git clone https://github.com/sullo/nikto ~')
 
     def installNmap(self):
         print('** Installing Nmap/libs **')
-        session.runCmdSimple('pip install python-nmap')
+        os.system('pip install python-nmap')
 
         # https://nmap.org/dist/nmap-7.70-setup.exe
         if platform.system() == 'Windows':
             print('DOWNLOAD: https://nmap.org/dist/nmap-7.70-setup.exe')
         else:
-            session.runCmdSimple('https://nmap.org/dist/nmap-7.70.tar.bz2')
-            session.runCmdSimple('bzip2 -cd nmap-7.70.tar.bz2 | tar xvf -')
-            session.runCmdSimple('cd nmap-7.70')
-            session.runCmdSimple('./configure')
-            session.runCmdSimple('make')
-            session.runCmdSimple('su root')
-            session.runCmdSimple('make install')
+            os.system('https://nmap.org/dist/nmap-7.70.tar.bz2')
+            os.system('bzip2 -cd nmap-7.70.tar.bz2 | tar xvf -')
+            os.system('cd nmap-7.70')
+            os.system('./configure')
+            os.system('make')
+            os.system('su root')
+            os.system('make install')
 
     def installNessus(self):
         print('** Installing Nessus **')
@@ -166,13 +193,13 @@ class Setup:
 
     def installPyshark(self):
         print('** Installing PyShark**')
-        session.runCmdSimple('pip3 install pyshark')
+        os.system('pip3 install pyshark')
         
     def installSmbexec(self):
         print('Installing SMBexec')
-        session.runCmdSimple('git clone https://github.com/brav0hax/smbexec.git ~/')
-        session.runCmdSimple('~/smbexec/install.sh')
-        session.runCmdSimple('~/smbexec/install.sh')
+        os.system('git clone https://github.com/brav0hax/smbexec.git ~/')
+        os.system('~/smbexec/install.sh')
+        os.system('~/smbexec/install.sh')
         print('If this has failed then try \'../Scripts/playbook_install.sh\'')
         
     def installVeil(self):
@@ -180,17 +207,40 @@ class Setup:
         
     def installDiscoverScripts(self):
         print('Installing Discover Scripts')
-        session.runCmdSimple('git clone https://github.com/leebaird/discover.git /opt/tools/discover')
-        session.runCmdSimple('/opt/tools/discover/setup.sh')
+        os.system('git clone https://github.com/leebaird/discover.git /opt/tools/discover')
+        os.system('/opt/tools/discover/setup.sh')
         return
 
     def installHttrack(self):
         print('Installing Httrack (web scraper)')
-        session.runCmdSimple('apt-get install httrack')
+        os.system('apt-get -y install httrack')
 
     def installOpenVAS(self):
         print('Installing OpenVAS')
-        session.runCmdSimple('apt-get install openvas')
+        os.system('apt-get -y install openvas')
+        
+    def installMing(self):
+    	print('Installing Ming C Compiler')
+    	os.system('apt-get -y install mingw-w64')
+    	
+    def installHyperion(self):
+    	print('Installing Hyperion for encryption')
+    	os.system('wget https://github.com/nullsecuritynet/tools/raw/master/binary/hyperion/release/Hyperion-1.2.zip ~/')
+    	os.system('unzip ~/Hyperion-1.2.zip')
+    	
+    def installEttercap(self):
+        print('Setting permissions for Ettercap')
+        os.system('sed -i -e \'s/ec_uid = 65534/ec_uid = 0/g\' /etc/ettercap/etter.conf')
+        os.system('sed -i -e \'s/ec_gid = 65534/ec_uid = 0/g\' /etc/ettercap/etter.conf')
+        
+    def installImagemagick(self):
+        os.system('apt-get install -y imagemagick')
+        
+    def installFtp(self):
+        os.system('apt-get install ftp')
+
+    def installTkinter(self):
+        os.system('apt-get install python python3-tk; pip3 install pygubu')
         
 if __name__ == "__main__":
     try:
