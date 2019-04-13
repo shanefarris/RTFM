@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolUpdater", "ToolUpdater\ToolUpdater.csproj", "{D34923E3-1C77-409F-9F18-AE2A80E931B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checklists", "Checklists\Checklists.csproj", "{23B4C592-FC77-4515-B30B-7EC4940F203A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D34923E3-1C77-409F-9F18-AE2A80E931B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34923E3-1C77-409F-9F18-AE2A80E931B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34923E3-1C77-409F-9F18-AE2A80E931B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34923E3-1C77-409F-9F18-AE2A80E931B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B4C592-FC77-4515-B30B-7EC4940F203A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B4C592-FC77-4515-B30B-7EC4940F203A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B4C592-FC77-4515-B30B-7EC4940F203A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B4C592-FC77-4515-B30B-7EC4940F203A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D761A91D-E1DD-435A-8CA1-525A83494A87}
+	EndGlobalSection
+EndGlobal
