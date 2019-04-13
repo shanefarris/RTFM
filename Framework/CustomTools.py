@@ -672,7 +672,7 @@ class SearchsploitCustomSearch(Tool):
         print('Enter your search terms: ')
         term = input()
         cmd = 'searchsploit -j ' + term + ' | tee ' + outFile
-        Session.session.runCmd(cmd, 'seachsploit', self.onComplete, outFile, None, True)
+        Session.session.runCmd(cmd, 'seachsploit', self.onComplete, outFile, True)
         return
         
     def onComplete(self, outFile):
