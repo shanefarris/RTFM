@@ -4,7 +4,7 @@
             "rhost": "192.168.159.132",
             "rport": "all",
             "target_os": "Linux",
-            "session_id": "debug12345",
+            "session_id": ".\\debug12345",
             "threads": "50",
             "output_tty": null,
             "auto_screenshot": false,
