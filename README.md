@@ -1,3 +1,8 @@
+# Quick Overview Video:
+https://www.youtube.com/watch?v=jz-FSPdoL-w&t=603s
+
+https://www.youtube.com/watch?v=ehYXVCzd1Gs&t=188s
+
 # RTFM
 Tool used for enumeration, reporting, and automating low hanging fruit during a penetration test.
 
