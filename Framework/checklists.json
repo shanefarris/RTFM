@@ -26,7 +26,7 @@
           "find / -perm -g=s -type f 2>/dev/null"
         ],
         "codeBlock": ""
-      },
+      }
     ]
   },
   {

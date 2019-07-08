@@ -38,6 +38,7 @@ class Session():
         import Exploit
         import Maintain
         import Parsers
+        import Shells
 
         self._rhost = '127.0.0.1'
         self._rport = 'ALL'
@@ -57,6 +58,7 @@ class Session():
         self.targetHost = TargetHost.TargetHost()
         self.parserManager = Parsers.ParserManager()
         self.checklistManager = Checklist.ChecklistManager()
+        self.shellsMenu = Shells.ShellsMenu()
 
         if name == None or len(name) < 5 or isNew == True:
             # New session

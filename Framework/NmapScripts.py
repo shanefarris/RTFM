@@ -198,7 +198,7 @@ class NmapVersion(NmapBase):
 class NmapQuick(NmapBase):
     def __init__(self):
         self._desc = 'Quick scan.'
-        self._name = 'NmapVersion'
+        self._name = 'NmapQuick'
         self._category = ToolCategory.Enumeration
         self._cmd = 'nmap -v -F ${target} '
         self._example = self._cmd

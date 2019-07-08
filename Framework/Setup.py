@@ -75,6 +75,13 @@ class Setup:
         elif index == 29:
             self.installAll()
 
+    def installMinimum(self):
+        os.system('pip install colorama')
+        os.system('python -m pip install -U pip')
+        os.system('pip install python-libnmap')
+
+        return
+
     def installStandard(self):
         os.system('pip install colorama')
 
@@ -88,6 +95,7 @@ class Setup:
             os.system('echo \"deb http://http.kali.org/kali kali-rolling main contrib non-free\" >> /etc/apt/sources.list')
             os.system('apt-get -y update && apt-get upgrade')
             os.system('pip install -U pip')
+            os.system('pip install pynput')
             os.system('apt -y update && apt -y install exploitdb')
             os.system('apt -y install libxml2-utils')
             os.system('searchsploit -u')
@@ -245,7 +253,15 @@ class Setup:
 if __name__ == "__main__":
     try:
         setup = Setup()
-        setup.installAll()
+
+        parser = argparse.ArgumentParser(description='Ready Go')
+        parser.add_argument('-m','--minimum', help='Only install the minimum required libraries to run this program', required = False)
+        args = parser.parse_args()
+
+        if args.minimum:
+            setup.installMinimum()
+        else:
+            setup.installAll()
 
     except Exception as e:
         print(e)

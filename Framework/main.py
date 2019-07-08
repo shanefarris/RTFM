@@ -11,16 +11,21 @@ if __name__ == "__main__":
     #os.system("powershell.exe $ENV:PATH += \';C:/Program Files (x86)/Nmap\'")
 
     try:
-        parser = argparse.ArgumentParser(description='Ready Go')
-        parser.add_argument('-s','--session', help='Load a specific session', required = False)
-        parser.add_argument('-n','--new', help='Create a new session with specified name', required = False)
-        parser.add_argument('-i','--ip', help='IP of target', required = False)
+        parser = argparse.ArgumentParser(description='RTFM: python3 main.py -i 10.1.1.3 -n target_name')
+        parser.add_argument('-s', dest='session', help='Load a specific session', required = False)
+        parser.add_argument('-i', dest='ip', help='IP of target, used in conjuction with the -n option.', required = False)
+        parser.add_argument('-n', dest='name', help='Create a new session with specified name', required = False)
+        
+        parser.add_argument('-m', dest='subnet', help='Map out network and create sessions for each machine found. e.g 10.1.1.0/24', required = False)
         args = parser.parse_args()
 
         if args.session:
             session.start(args.session)
-        elif args.new:
-            session.start(args.new, True, args.ip)
+        elif args.name:
+            session.start(args.name, True, args.ip)
+        elif args.subnet:
+            #session.start(args.new, True, args.ip)
+            pass
         else:
             #session.start()
             session.start('debug12345')
@@ -35,6 +40,7 @@ if __name__ == "__main__":
 
 # TODOS:
 '''
+unicornscan
 https://guif.re/
 msfvenom wizard (customized tool)
 better tcpdump wizard

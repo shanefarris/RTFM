@@ -2,6 +2,7 @@
 import os
 import platform
 from colorama import Fore, Back, Style, init
+from pynput import keyboard
 
 import logging
 import ToolManager
@@ -12,6 +13,8 @@ import Shells
 from MenuBase import *
 from Session import *
 
+class MyException(Exception): pass
+
 class Screen(MenuBase):
 
     def __init__(self):
@@ -19,10 +22,43 @@ class Screen(MenuBase):
         self._currentMenu = ''
         self._message = ''
         self._toolCategory = 0
+        self._cmdHistory = []
+        self._cmdHistoryIndex = 0
 
         self.CLEAR_SCREEN = 'clear'
         if platform.system() == 'Windows':
             self.CLEAR_SCREEN = 'cls'
+
+        return
+
+    def on_press(self, key):
+        #keyboard.type('test')
+        if key == keyboard.Key.up:
+            keyboard.type('UP\n')
+            self._cmdHistoryIndex -= 1
+        elif key == keyboard.Key.down:
+            keyboard.type('DOWN\n')
+            self._cmdHistoryIndex += 1
+
+        if self._cmdHistoryIndex < 0:
+            self._cmdHistoryIndex == 0;
+        elif self._cmdHistoryIndex > (len(self._cmdHistory) - 1):
+            self._cmdHistoryIndex = len(self._cmdHistory) - 1
+
+        return
+
+    def addCmdHistory(self, cmd):
+        self._cmdHistory.append(cmd)
+        self._cmdHistoryIndex = len(self._cmdHistory) - 1
+        return
+
+    def getCmdHistoryByIndex(self, index):
+        if index > len(self._cmdHistory):
+            return ''
+        return self._cmdHistory[index]
+
+    def getCmdHistories(self):
+        return self._cmdHistory
 
     def getBoarder(self):
         return self.BORDER + '************************************ ' + session.getId() + ' ************************************' + self.ENDC
@@ -73,10 +109,12 @@ class Screen(MenuBase):
         return arry
 
     def userinput(self):
-        choice = input() # NOTE: changes behaviour in Python 3! 
+        choice = input()
 
         if choice is None:
             self.prompt("Try again.")
+
+        self.addCmdHistory(choice)
 
         if self.checkBuiltInCommands(choice) == True:
             return
@@ -590,14 +628,38 @@ class Screen(MenuBase):
             
     def shellsShow(self):
         self._currentMenu = 'shellsSelection'
-        self.printMenu(['Generate Shells:', '1 = Create Shells File' ])
+
+        count = 1
+        arry = []
+        for k, shell in session.shellsMenu.getShells().items():
+            arry.append(str(count) + ' = ' + shell._name)
+            count += 1
+
+        arry.append('')
+        arry.append('List Info NUM\t\tAll = Create all Shells')
+
+        self.printMenu(arry)
 
     def shellsHandle(self, choice):
-        shellMenu = Shells.ShellsMenu
-        if choice == '1':
-            Shells.ShellsMenu().run()
-        else:
-            self.prompt('Try again')  
+        if choice.isdigit():
+            num = int(choice)
+            if num > 0:
+                Shells.ShellsMenu().run(num)
+        elif 'all' in choice:
+            Shells.ShellsMenu().runAll()
+        elif 'listinfo' in choice:
+            choice = choice.replace('listinfo', '')
+            if choice.isdigit():
+                num = int(choice)
+                count = 1
+                for k, shell in session.shellsMenu.getShells().items():
+                    if count == num:
+                        self.prompt(shell._desc)
+                        break
+                    else:
+                        count += 1
+            else:
+                self.prompt('Try again')
         return
 
     def attackFlowShow(self):
@@ -622,6 +684,8 @@ class Screen(MenuBase):
             self.exploitShow()
         elif choice == '4':
             self.maintainShow()
+
+        return
 
     def templateShow(self):
         self._currentMenu = 'templateSelection'
